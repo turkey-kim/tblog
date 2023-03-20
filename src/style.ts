@@ -7,8 +7,17 @@ export interface Icolor {
   bg100: string;
 }
 
+export interface IfontSize {
+  small: string;
+  mediumSmall: string;
+  medium: string;
+  large: string;
+  extraLarge: string;
+}
+
 interface Theme {
   color: Icolor;
+  fontSize: IfontSize;
 }
 
 const color = {
@@ -17,17 +26,28 @@ const color = {
   bg100: "#E6E2D6",
 };
 
+const fontSize = {
+  small: "5px",
+  mediumSmall: "10px",
+  medium: "15px",
+  large: "20px",
+  extraLarge: "25px",
+};
+
 export const theme = {
   color,
+  fontSize,
 };
 
 export const myTheme: DefaultTheme = {
   color,
+  fontSize,
 };
 
 export const MyGlobalStyle = createGlobalStyle<{ theme: Theme }>`
     body{
         font-family: 'Nanum Gothic', sans-serif;
-        background-color: ${(props) => props.theme.color?.bg100}
+        background-color: ${(props) => props.theme.color?.bg100};
+        font-size : ${(props) => props.theme.fontSize?.medium};
     }
 `;

@@ -1,11 +1,15 @@
 import React, { ReactEventHandler, useState } from "react";
+import LoginButton from "../components/LoginButton";
 import styled from "styled-components";
+import Button from "../components/Button";
+
+const LOGIN_KEY = "로그인";
 
 function Login() {
   var [title, setTitle] = useState("로그인");
 
   const signInForm = () => {
-    setTitle("로그인");
+    setTitle(LOGIN_KEY);
   };
 
   const signUpForm = () => {
@@ -16,7 +20,6 @@ function Login() {
     <>
       <MainTextArea></MainTextArea>
       <LoginArea>
-        <LoginAreaMarginTop></LoginAreaMarginTop>
         <ModalBox>
           <h1>{title}</h1>
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -47,7 +50,7 @@ function Login() {
                   type="password"
                   placeholder="PASSWORD를 입력하세요"
                 ></InputBox>
-                <SumbitButton type="submit">{title}</SumbitButton>
+                <Button onClick={() => {}} text="test"></Button>
               </LoginForm>
             ) : (
               <LoginForm>
@@ -78,11 +81,6 @@ const LoginArea = styled.div`
   height: 100%;
 `;
 
-const LoginAreaMarginTop = styled.div`
-  width: 100%;
-  height: 70px;
-`;
-
 const ModalBox = styled.div`
   background-color: ${({ theme }) => theme.color.bg150};
   display: flex;
@@ -91,6 +89,8 @@ const ModalBox = styled.div`
   width: 100%;
   height: 500px;
   border-radius: 10px;
+  margin-top: 100px;
+  padding: 0 50px 0 50px;
 `;
 
 const SignIn = styled.button`
@@ -123,7 +123,7 @@ const SignUp = styled.button`
 `;
 
 const Label = styled.div`
-  width: 80%;
+  width: 100%;
   text-align: left;
   margin-top: 20px;
   margin-bottom: 5px;
@@ -140,7 +140,7 @@ const LoginForm = styled.div`
 `;
 
 const InputBox = styled.input`
-  width: 80%;
+  width: 100%;
   height: 30px;
   outline: none;
   border: none;

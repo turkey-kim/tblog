@@ -7,6 +7,8 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { MyGlobalStyle, myTheme } from "./style";
 import { ThemeProvider } from "styled-components";
+import EditPost from "./pages/EditPost";
+import Post from "./pages/Post";
 
 function App() {
   return (
@@ -17,9 +19,11 @@ function App() {
         <Body>
           <WhiteSpace></WhiteSpace>
           <Routes>
-            <Route path="/" element={<Home></Home>}></Route>
-            <Route path="/login" element={<Login></Login>}></Route>
-            <Route path="/test" element={<Test></Test>}></Route>
+            <Route path="/" element={<Home></Home>} />
+            <Route path="/login" element={<Login></Login>} />
+            <Route path="/test" element={<Test></Test>} />
+            <Route path="/edit" element={<EditPost />} />
+            <Route path="/post" element={<Post />} />
           </Routes>
           <WhiteSpace></WhiteSpace>
         </Body>
