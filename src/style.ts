@@ -34,14 +34,21 @@ const fontSize = {
   extraLarge: "25px",
 };
 
+const device = {
+  tablet: `screen and (max-width: 990px)`,
+  mobile: `screen and (max-width: 450px)`,
+};
+
 export const theme = {
   color,
   fontSize,
+  device,
 };
 
 export const myTheme: DefaultTheme = {
   color,
   fontSize,
+  device,
 };
 
 export const MyGlobalStyle = createGlobalStyle<{ theme: Theme }>`

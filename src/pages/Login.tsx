@@ -18,79 +18,120 @@ function Login() {
 
   return (
     <>
-      <MainTextArea></MainTextArea>
-      <LoginArea>
-        <ModalBox>
-          <h1>{title}</h1>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ width: "100%", display: "inline-flex" }}>
-              <SignIn
-                onClick={() => {
-                  signInForm();
-                }}
-                color={title === "로그인" ? "1" : ""}
-              >
-                로그인
-              </SignIn>
-              <SignUp
-                onClick={() => {
-                  signUpForm();
-                }}
-                color={title === "회원가입" ? "1" : ""}
-              >
-                회원가입
-              </SignUp>
+      <EntireField>
+        <TextField>
+          <h1>Welcome to Tblog!</h1>
+          <h3>Sign in & Enjoy our service as you want</h3>
+          <p>We provide writing service and you can write whatever you want</p>
+        </TextField>
+        <LoginField>
+          <LoginBox>
+            <h1>{title}</h1>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ width: "100%", display: "inline-flex" }}>
+                <SignIn
+                  onClick={() => {
+                    signInForm();
+                  }}
+                  color={title === "로그인" ? "1" : ""}
+                >
+                  로그인
+                </SignIn>
+                <SignUp
+                  onClick={() => {
+                    signUpForm();
+                  }}
+                  color={title === "회원가입" ? "1" : ""}
+                >
+                  회원가입
+                </SignUp>
+              </div>
+              {title === "로그인" ? (
+                <LoginForm>
+                  <Label>아이디</Label>
+                  <InputBox placeholder="ID를 입력하세요"></InputBox>
+                  <Label>비밀번호</Label>
+                  <InputBox
+                    type="password"
+                    placeholder="PASSWORD를 입력하세요"
+                  ></InputBox>
+                  <Button onClick={() => {}} text="test"></Button>
+                </LoginForm>
+              ) : (
+                <LoginForm>
+                  <Label>{title}</Label>
+                  <InputBox placeholder={title}></InputBox>
+                  <Label>{title}</Label>
+                  <InputBox type="password" placeholder={title}></InputBox>
+                  <SumbitButton type="submit">{title}</SumbitButton>
+                </LoginForm>
+              )}
             </div>
-            {title === "로그인" ? (
-              <LoginForm>
-                <Label>아이디</Label>
-                <InputBox placeholder="ID를 입력하세요"></InputBox>
-                <Label>비밀번호</Label>
-                <InputBox
-                  type="password"
-                  placeholder="PASSWORD를 입력하세요"
-                ></InputBox>
-                <Button onClick={() => {}} text="test"></Button>
-              </LoginForm>
-            ) : (
-              <LoginForm>
-                <Label>{title}</Label>
-                <InputBox placeholder={title}></InputBox>
-                <Label>{title}</Label>
-                <InputBox type="password" placeholder={title}></InputBox>
-                <SumbitButton type="submit">{title}</SumbitButton>
-              </LoginForm>
-            )}
-          </div>
-          <div id="여백" style={{ marginTop: "50px" }}></div>
-        </ModalBox>
-      </LoginArea>
+            <div id="여백" style={{ marginTop: "50px" }}></div>
+          </LoginBox>
+        </LoginField>
+      </EntireField>
     </>
   );
 }
 
-const MainTextArea = styled.div`
-  width: 60%;
-  height: 100%;
+const EntireField = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 20px 0 20px;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
-const LoginArea = styled.div`
+const TextField = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30%;
-  height: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-right: 200px;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    margin-right: 150px;
+  }
+
+  @media (max-width: 770px) {
+    display: none;
+  }
 `;
 
-const ModalBox = styled.div`
+const LoginField = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    width: 100%;
+  }
+`;
+
+const LoginBox = styled.div`
   background-color: ${({ theme }) => theme.color.bg150};
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
+  width: 450px;
   height: 500px;
   border-radius: 10px;
   margin-top: 100px;
-  padding: 0 50px 0 50px;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 380px;
+  }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    width: 100%;
+    margin-top: 30px;
+  }
 `;
 
 const SignIn = styled.button`
@@ -123,7 +164,7 @@ const SignUp = styled.button`
 `;
 
 const Label = styled.div`
-  width: 100%;
+  width: 80%;
   text-align: left;
   margin-top: 20px;
   margin-bottom: 5px;
@@ -140,7 +181,7 @@ const LoginForm = styled.div`
 `;
 
 const InputBox = styled.input`
-  width: 100%;
+  width: 80%;
   height: 30px;
   outline: none;
   border: none;
