@@ -1,14 +1,14 @@
 import Header from "./components/Header";
 import styled from "styled-components";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import Test from "./pages/Test";
+import Login from "./views/Login";
+import SignUp from "./views/SignUp";
+import Home from "./views/Home";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { MyGlobalStyle, myTheme } from "./style";
 import { ThemeProvider } from "styled-components";
-import EditPost from "./pages/EditPost";
-import Post from "./pages/Post";
+import EditPost from "./views/EditPost";
+import Post from "./views/Post";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home></Home>} />
             <Route path="/login" element={<Login></Login>} />
-            <Route path="/test" element={<Test></Test>} />
+            <Route path="/sign_up" element={<SignUp></SignUp>} />
             <Route path="/edit" element={<EditPost />} />
             <Route path="/post" element={<Post />} />
           </Routes>

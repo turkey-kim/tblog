@@ -1,12 +1,19 @@
-import React, { ReactEventHandler, useState } from "react";
-import LoginButton from "../components/LoginButton";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Button from "../components/Button";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LOGIN_KEY = "로그인";
 
 function Login() {
   var [title, setTitle] = useState("로그인");
+  const navigate = useNavigate();
+  const signUp = function () {
+    navigate("/sign_up");
+  };
+
+  const [id, setId] = useState("");
+  const [pw, setPw] = useState("");
 
   const signInForm = () => {
     setTitle(LOGIN_KEY);
@@ -15,6 +22,20 @@ function Login() {
   const signUpForm = () => {
     setTitle("회원가입");
   };
+
+  function submitLogin() {
+    axios
+      .post("http://localhost:5000/login", {
+        id: id,
+        pw: pw,
+      })
+      .then(() => {
+        console.log("성공");
+      })
+      .catch(() => {
+        console.log("실패");
+      });
+  }
 
   return (
     <>
@@ -26,48 +47,38 @@ function Login() {
         </TextField>
         <LoginField>
           <LoginBox>
-            <h1>{title}</h1>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <div style={{ width: "100%", display: "inline-flex" }}>
-                <SignIn
-                  onClick={() => {
-                    signInForm();
-                  }}
-                  color={title === "로그인" ? "1" : ""}
-                >
-                  로그인
-                </SignIn>
+                <SignIn>로그인</SignIn>
                 <SignUp
                   onClick={() => {
-                    signUpForm();
+                    signUp();
                   }}
-                  color={title === "회원가입" ? "1" : ""}
                 >
                   회원가입
                 </SignUp>
               </div>
-              {title === "로그인" ? (
-                <LoginForm>
-                  <Label>아이디</Label>
-                  <InputBox placeholder="ID를 입력하세요"></InputBox>
-                  <Label>비밀번호</Label>
-                  <InputBox
-                    type="password"
-                    placeholder="PASSWORD를 입력하세요"
-                  ></InputBox>
-                  <Button onClick={() => {}} text="test"></Button>
-                </LoginForm>
-              ) : (
-                <LoginForm>
-                  <Label>{title}</Label>
-                  <InputBox placeholder={title}></InputBox>
-                  <Label>{title}</Label>
-                  <InputBox type="password" placeholder={title}></InputBox>
-                  <SumbitButton type="submit">{title}</SumbitButton>
-                </LoginForm>
-              )}
+              <LoginForm id="loginForm" onSubmit={submitLogin}>
+                <Label>아이디</Label>
+                <InputBox
+                  placeholder="ID를 입력하세요"
+                  value={id}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setId(e.target.value);
+                  }}
+                ></InputBox>
+                <Label>비밀번호</Label>
+                <InputBox
+                  type="password"
+                  placeholder="PASSWORD를 입력하세요"
+                  value={pw}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setPw(e.target.value);
+                  }}
+                ></InputBox>
+                <SubmitButton type="submit">로그인</SubmitButton>
+              </LoginForm>
             </div>
-            <div id="여백" style={{ marginTop: "50px" }}></div>
           </LoginBox>
         </LoginField>
       </EntireField>
@@ -106,7 +117,7 @@ const TextField = styled.div`
 const LoginField = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
   @media ${({ theme }) => theme.device.mobile} {
@@ -118,9 +129,9 @@ const LoginBox = styled.div`
   background-color: ${({ theme }) => theme.color.bg150};
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   width: 450px;
-  height: 500px;
+  height: 450px;
   border-radius: 10px;
   margin-top: 100px;
 
@@ -136,31 +147,20 @@ const LoginBox = styled.div`
 
 const SignIn = styled.button`
   width: 100%;
-  height: 30px;
+  height: 40px;
   border: none;
+  border-radius: 10px 0 0 0;
   font-weight: 600;
-  background-color: ${(props) =>
-    props.color
-      ? ({ theme }) => theme.color.bg150
-      : ({ theme }) => theme.color.bg200};
-
-  :hover {
-    background-color: ${({ theme }) => theme.color.bg100};
-  }
+  background-color: ${({ theme }) => theme.color.bg150};
 `;
 
 const SignUp = styled.button`
   width: 100%;
-  height: 30px;
+  height: 40px;
   border: none;
+  border-radius: 0 10px 0 0;
   font-weight: 600;
-  background-color: ${(props) =>
-    props.color
-      ? ({ theme }) => theme.color.bg150
-      : ({ theme }) => theme.color.bg200};
-  :hover {
-    background-color: ${({ theme }) => theme.color.bg100};
-  }
+  background-color: ${({ theme }) => theme.color.bg200};
 `;
 
 const Label = styled.div`
@@ -172,23 +172,28 @@ const Label = styled.div`
   font-size: small;
 `;
 
-const LoginForm = styled.div`
+const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  margin-top: 50px;
 `;
 
 const InputBox = styled.input`
   width: 80%;
   height: 30px;
   outline: none;
-  border: none;
-  border-radius: 2px;
+  border: 2px lightGray solid;
+  border-radius: 5px;
+
+  :focus {
+    border-color: #b6ade6;
+  }
 `;
 
-const SumbitButton = styled.button`
+const SubmitButton = styled.button`
   margin-top: 30px;
   width: 82%;
   outline: none;
