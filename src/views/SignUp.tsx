@@ -49,13 +49,13 @@ function Login() {
 
   function isPasswordValid() {
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+      /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[a-z\d@$!%*?&]{8,20}$/;
     return passwordRegex.test(pw);
   }
 
   function isIdValid() {
     axios
-      .post("http://localhost:5000/id_checker", { id: id })
+      .post("http://localhost:5000/api/id_checker", { id: id })
       .then((response) => {
         const data = response.data;
         if (data.duplicate) {
@@ -80,9 +80,7 @@ function Login() {
       alert("비밀번호가 일치하지 않습니다.");
       setPwAlert(true);
     } else if (isPasswordValid() == false) {
-      alert(
-        "비밀번호는 영대문자, 소문자, 숫자, 특수문자를 포함한 8-20글자여야 합니다."
-      );
+      alert("비밀번호는 영문자, 숫자, 특수문자를 포함한 8-20글자여야 합니다.");
     } else {
       setPwAlert(false);
       axios

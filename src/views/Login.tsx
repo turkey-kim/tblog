@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 const LOGIN_KEY = "로그인";
 
@@ -23,16 +23,25 @@ function Login() {
     setTitle("회원가입");
   };
 
-  function submitLogin() {
+  function submitLogin(e: FormEvent) {
+    e.preventDefault();
     axios
-      .post("http://localhost:5000/login", {
-        id: id,
-        pw: pw,
+      .post(
+        "http://localhost:5000/login",
+        {
+          id: id,
+          pw: pw,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        localStorage.setItem("jwt", response.data.token);
+        redirect("/");
       })
-      .then(() => {
-        console.log("성공");
-      })
-      .catch(() => {
+      .catch((err) => {
+        console.log("login error", err);
         console.log("실패");
       });
   }

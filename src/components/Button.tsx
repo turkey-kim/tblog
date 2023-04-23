@@ -4,7 +4,7 @@ import React from "react";
 type ButtonSize = "small" | "medium" | "large";
 
 interface Props {
-  onClick(): void;
+  onClick(): any;
   type?: string;
   text?: string;
   size?: ButtonSize;

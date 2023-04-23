@@ -9,6 +9,9 @@ import { MyGlobalStyle, myTheme } from "./style";
 import { ThemeProvider } from "styled-components";
 import EditPost from "./views/EditPost";
 import Post from "./views/Post";
+import { useEffect } from "react";
+import axios from "axios";
+import Test from "./views/Test";
 
 function App() {
   return (
@@ -23,6 +26,7 @@ function App() {
             <Route path="/sign_up" element={<SignUp></SignUp>} />
             <Route path="/edit" element={<EditPost />} />
             <Route path="/post" element={<Post />} />
+            <Route path="/test" element={<Test />} />
           </Routes>
         </Body>
       </ThemeProvider>
