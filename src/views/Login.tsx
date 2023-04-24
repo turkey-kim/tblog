@@ -1,12 +1,9 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
-import { redirect, useNavigate } from "react-router-dom";
-
-const LOGIN_KEY = "로그인";
+import { useNavigate } from "react-router-dom";
+import postLogin from "../businessLogic/PostLogin";
 
 function Login() {
-  var [title, setTitle] = useState("로그인");
   const navigate = useNavigate();
   const signUp = function () {
     navigate("/sign_up");
@@ -15,35 +12,9 @@ function Login() {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
-  const signInForm = () => {
-    setTitle(LOGIN_KEY);
-  };
-
-  const signUpForm = () => {
-    setTitle("회원가입");
-  };
-
   function submitLogin(e: FormEvent) {
     e.preventDefault();
-    axios
-      .post(
-        "http://localhost:5000/login",
-        {
-          id: id,
-          pw: pw,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        localStorage.setItem("jwt", response.data.token);
-        redirect("/");
-      })
-      .catch((err) => {
-        console.log("login error", err);
-        console.log("실패");
-      });
+    postLogin(id, pw);
   }
 
   return (

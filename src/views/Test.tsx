@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import axios from "axios";
-import Cookies from "js-cookie";
 import React from "react";
 
 function Test() {

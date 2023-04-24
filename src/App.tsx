@@ -9,11 +9,26 @@ import { MyGlobalStyle, myTheme } from "./style";
 import { ThemeProvider } from "styled-components";
 import EditPost from "./views/EditPost";
 import Post from "./views/Post";
-import { useEffect } from "react";
-import axios from "axios";
 import Test from "./views/Test";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "./modules/isLoggedin";
+import { RootState } from "./modules";
 
 function App() {
+  const loginState = useSelector((state: RootState) => state.isLoggedIn);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const tokenChecker = localStorage.getItem("jwt");
+    if (tokenChecker) {
+      dispatch(login());
+    } else {
+      dispatch(logout());
+    }
+    console.log(loginState);
+  }, []);
+
   return (
     <div className="App">
       <MyGlobalStyle theme={myTheme} />
@@ -27,6 +42,7 @@ function App() {
             <Route path="/edit" element={<EditPost />} />
             <Route path="/post" element={<Post />} />
             <Route path="/test" element={<Test />} />
+            <Route path="/mypage" element={<>My Page</>} />
           </Routes>
         </Body>
       </ThemeProvider>
