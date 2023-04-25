@@ -1,13 +1,16 @@
-import React, { FormEvent, useState, useEffect } from "react";
+import { FormEvent } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import postLogin from "../businessLogic/postLogin";
+import postLogin from "../businessLogic/logIn/postLogin";
+import useInput from "../hooks/useInput";
 
 function Login() {
   const navigate = useNavigate();
-
-  const [id, setId] = useState("");
-  const [pw, setPw] = useState("");
+  const [text, setText] = useInput({
+    id: "",
+    pw: "",
+  });
+  const { id, pw } = text;
 
   function submitLogin(e: FormEvent) {
     e.preventDefault();
@@ -38,20 +41,18 @@ function Login() {
               <LoginForm id="loginForm" onSubmit={submitLogin}>
                 <Label>아이디</Label>
                 <InputBox
+                  name="id"
                   placeholder="ID를 입력하세요"
                   value={id}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setId(e.target.value);
-                  }}
+                  onChange={setText}
                 ></InputBox>
                 <Label>비밀번호</Label>
                 <InputBox
+                  name="pw"
                   type="password"
                   placeholder="PASSWORD를 입력하세요"
                   value={pw}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setPw(e.target.value);
-                  }}
+                  onChange={setText}
                 ></InputBox>
                 <SubmitButton type="submit">로그인</SubmitButton>
               </LoginForm>
