@@ -5,13 +5,13 @@ interface TextValues {
   [id: string]: string;
 }
 
-function useInput(initialForm: TextValues) {
-  const [text, setText] = useState(initialForm);
+function useInput(initialText: TextValues) {
+  const [text, setText] = useState(initialText);
 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
-      setText((form) => ({ ...form, [name]: value }));
+      setText((text) => ({ ...text, [name]: value }));
     },
     [text]
   );

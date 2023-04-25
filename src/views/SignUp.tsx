@@ -1,82 +1,41 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
-import { redirect, useNavigate } from "react-router-dom";
-import idChecker from "../businessLogic/idChecker";
+import { useNavigate } from "react-router-dom";
+import useIdChecker from "../hooks/signUp/idChecker";
 import useInput from "../hooks/useInput";
-import { checkWhiteSpace } from "../businessLogic/signUp/checkWhiteSpace";
+import {
+  checkWhiteSpace,
+  isPasswordValid,
+  isPasswordMatch,
+} from "../businessLogic/signUp";
+import postSignUp from "../businessLogic/signUp/postSignup";
 
 function Login() {
   const title: string = "회원가입";
   const navigate = useNavigate();
-
   const [text, setText] = useInput({
     id: "",
     pw: "",
     pw2: "",
   });
-
   const { id, pw, pw2 } = text;
-
+  const [idValidity] = useIdChecker(id);
   const [pwAlert, setPwAlert] = useState(false);
-  const [idValid, setIdValid] = useState("");
-
-  function isPasswordMatch() {
-    if (pw == pw2) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function isPasswordValid() {
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[a-z\d@$!%*?&]{8,20}$/;
-    return passwordRegex.test(pw);
-  }
-
-  function isIdValid() {
-    axios
-      .post("http://localhost:5000/api/id_checker", { id: id })
-      .then((response) => {
-        const data = response.data;
-        if (data.duplicate) {
-          setIdValid("true");
-        } else {
-          setIdValid("false");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 
   function signUpSubmit(e: React.MouseEvent) {
     e.preventDefault();
-    isIdValid();
-    if (idValid == "true") {
+    if (idValidity) {
       alert("중복된 아이디입니다, 다른 아이디를 입력해주세요");
     } else if (checkWhiteSpace(id, pw, pw2) == true) {
       alert("빈칸을 모두 채워주세요.");
-    } else if (isPasswordMatch() == false) {
+    } else if (isPasswordMatch(pw, pw2) == false) {
       alert("비밀번호가 일치하지 않습니다.");
       setPwAlert(true);
-    } else if (isPasswordValid() == false) {
+    } else if (isPasswordValid(pw) == false) {
       alert("비밀번호는 영문자, 숫자, 특수문자를 포함한 8-20글자여야 합니다.");
     } else {
       setPwAlert(false);
-      axios
-        .post("http://localhost:5000/sign_up", {
-          id: id,
-          pw: pw,
-        })
-        .then(() => {
-          console.log("성공");
-          alert("회원가입 성공!");
-        })
-        .catch(() => {
-          console.log("실패");
-        });
+      postSignUp(id, pw);
     }
   }
 
