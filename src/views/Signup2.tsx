@@ -1,17 +1,88 @@
-import React, { FormEvent, useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import postLogin from "../businessLogic/postLogin";
+import axios from "axios";
+import { redirect, useNavigate } from "react-router-dom";
+import idChecker from "../businessLogic/idChecker";
 
 function Login() {
+  const title: string = "회원가입";
   const navigate = useNavigate();
 
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+  const [pw2, setPw2] = useState("");
+  const [pwAlert, setPwAlert] = useState(false);
+  const [idValid, setIdValid] = useState("");
 
-  function submitLogin(e: FormEvent) {
+  function goToLogin() {
+    navigate("/login");
+  }
+
+  function idSetter(e: React.ChangeEvent<HTMLInputElement>) {
+    setId(e.target.value);
+  }
+
+  function pwSetter(e: React.ChangeEvent<HTMLInputElement>) {
+    setPw(e.target.value);
+  }
+
+  function pw2Setter(e: React.ChangeEvent<HTMLInputElement>) {
+    setPw2(e.target.value);
+  }
+
+  function isWhitespace() {
+    if (id && pw && pw2 != "") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  function isPasswordMatch() {
+    if (pw == pw2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function isPasswordValid() {
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[a-z\d@$!%*?&]{8,20}$/;
+    return passwordRegex.test(pw);
+  }
+
+  function isIdValid() {
+    idChecker(id);
+  }
+
+  function signUpSubmit(e: React.MouseEvent) {
     e.preventDefault();
-    postLogin(id, pw);
+    isIdValid();
+    if (idValid == "true") {
+      alert("중복된 아이디입니다, 다른 아이디를 입력해주세요");
+    } else if (isWhitespace() == true) {
+      alert("빈칸을 모두 채워주세요.");
+    } else if (isPasswordMatch() == false) {
+      alert("비밀번호가 일치하지 않습니다.");
+      setPwAlert(true);
+    } else if (isPasswordValid() == false) {
+      alert("비밀번호는 영문자, 숫자, 특수문자를 포함한 8-20글자여야 합니다.");
+    } else {
+      setPwAlert(false);
+      axios
+        .post("http://localhost:5000/sign_up", {
+          id: id,
+          pw: pw,
+        })
+        .then(() => {
+          console.log("성공");
+          alert("회원가입 성공!");
+        })
+        .catch(() => {
+          console.log("실패");
+        });
+    }
   }
 
   return (
@@ -26,34 +97,46 @@ function Login() {
           <LoginBox>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <div style={{ width: "100%", display: "inline-flex" }}>
-                <SignIn>로그인</SignIn>
-                <SignUp
+                <SignIn
                   onClick={() => {
-                    navigate("/sign_up");
+                    goToLogin();
                   }}
                 >
-                  회원가입
-                </SignUp>
+                  로그인
+                </SignIn>
+                <SignUp>회원가입</SignUp>
               </div>
-              <LoginForm id="loginForm" onSubmit={submitLogin}>
+              <LoginForm>
                 <Label>아이디</Label>
                 <InputBox
-                  placeholder="ID를 입력하세요"
+                  name="id"
+                  placeholder="사용하실 아이디를 입력하세요"
                   value={id}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setId(e.target.value);
-                  }}
+                  onChange={idSetter}
                 ></InputBox>
                 <Label>비밀번호</Label>
                 <InputBox
+                  name="pw"
                   type="password"
-                  placeholder="PASSWORD를 입력하세요"
+                  placeholder="영대문자, 영소문자, 숫자, 특수문자 포함 8~20자"
                   value={pw}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setPw(e.target.value);
-                  }}
+                  onChange={pwSetter}
                 ></InputBox>
-                <SubmitButton type="submit">로그인</SubmitButton>
+                <InputBox
+                  name="pw2"
+                  type="password"
+                  placeholder="비밀번호를 확인해주세요"
+                  value={pw2}
+                  onChange={pw2Setter}
+                ></InputBox>
+                {pwAlert === true ? (
+                  <PasswordAlert>비밀번호를 재확인하시오</PasswordAlert>
+                ) : (
+                  ""
+                )}
+                <SubmitButton type="submit" onClick={signUpSubmit}>
+                  {title}
+                </SubmitButton>
               </LoginForm>
             </div>
           </LoginBox>
@@ -128,7 +211,7 @@ const SignIn = styled.button`
   border: none;
   border-radius: 10px 0 0 0;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.color.bg150};
+  background-color: ${({ theme }) => theme.color.bg200};
 `;
 
 const SignUp = styled.button`
@@ -137,7 +220,7 @@ const SignUp = styled.button`
   border: none;
   border-radius: 0 10px 0 0;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.color.bg200};
+  background-color: ${({ theme }) => theme.color.bg150};
 `;
 
 const Label = styled.div`
@@ -164,6 +247,7 @@ const InputBox = styled.input`
   outline: none;
   border: 2px lightGray solid;
   border-radius: 5px;
+  margin-bottom: 10px;
 
   :focus {
     border-color: #b6ade6;
@@ -186,6 +270,11 @@ const SubmitButton = styled.button`
   :hover {
     background-color: ${({ theme }) => theme.color.bg100};
   }
+`;
+
+const PasswordAlert = styled.div`
+  color: red;
+  font-size: small;
 `;
 
 export default Login;

@@ -2,42 +2,24 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { redirect, useNavigate } from "react-router-dom";
-import { response } from "express";
-import { error } from "console";
+import idChecker from "../businessLogic/idChecker";
+import useInput from "../hooks/useInput";
+import { checkWhiteSpace } from "../businessLogic/signUp/checkWhiteSpace";
 
 function Login() {
   const title: string = "회원가입";
   const navigate = useNavigate();
 
-  const [id, setId] = useState("");
-  const [pw, setPw] = useState("");
-  const [pw2, setPw2] = useState("");
+  const [text, setText] = useInput({
+    id: "",
+    pw: "",
+    pw2: "",
+  });
+
+  const { id, pw, pw2 } = text;
+
   const [pwAlert, setPwAlert] = useState(false);
   const [idValid, setIdValid] = useState("");
-
-  function goToLogin() {
-    navigate("/login");
-  }
-
-  function idSetter(e: React.ChangeEvent<HTMLInputElement>) {
-    setId(e.target.value);
-  }
-
-  function pwSetter(e: React.ChangeEvent<HTMLInputElement>) {
-    setPw(e.target.value);
-  }
-
-  function pw2Setter(e: React.ChangeEvent<HTMLInputElement>) {
-    setPw2(e.target.value);
-  }
-
-  function isWhitespace() {
-    if (id && pw && pw2 != "") {
-      return false;
-    } else {
-      return true;
-    }
-  }
 
   function isPasswordMatch() {
     if (pw == pw2) {
@@ -74,7 +56,7 @@ function Login() {
     isIdValid();
     if (idValid == "true") {
       alert("중복된 아이디입니다, 다른 아이디를 입력해주세요");
-    } else if (isWhitespace() == true) {
+    } else if (checkWhiteSpace(id, pw, pw2) == true) {
       alert("빈칸을 모두 채워주세요.");
     } else if (isPasswordMatch() == false) {
       alert("비밀번호가 일치하지 않습니다.");
@@ -112,7 +94,7 @@ function Login() {
               <div style={{ width: "100%", display: "inline-flex" }}>
                 <SignIn
                   onClick={() => {
-                    goToLogin();
+                    navigate("/login");
                   }}
                 >
                   로그인
@@ -122,22 +104,25 @@ function Login() {
               <LoginForm>
                 <Label>아이디</Label>
                 <InputBox
+                  name="id"
                   placeholder="사용하실 아이디를 입력하세요"
                   value={id}
-                  onChange={idSetter}
+                  onChange={setText}
                 ></InputBox>
                 <Label>비밀번호</Label>
                 <InputBox
+                  name="pw"
                   type="password"
                   placeholder="영대문자, 영소문자, 숫자, 특수문자 포함 8~20자"
                   value={pw}
-                  onChange={pwSetter}
+                  onChange={setText}
                 ></InputBox>
                 <InputBox
+                  name="pw2"
                   type="password"
                   placeholder="비밀번호를 확인해주세요"
                   value={pw2}
-                  onChange={pw2Setter}
+                  onChange={setText}
                 ></InputBox>
                 {pwAlert === true ? (
                   <PasswordAlert>비밀번호를 재확인하시오</PasswordAlert>
