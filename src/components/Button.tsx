@@ -23,22 +23,21 @@ const Btn = styled.button<Props>`
   border-radius: 3px;
   cursor: pointer;
   font-size: ${(props) =>
-    props.size === "small" ? "12px" : props.size === "large" ? "18px" : "14px"};
+    props.size === "small" ? "12px" : props.size === "large" ? "16px" : "13px"};
+  font-weight: ${(props) =>
+    props.size === "small" ? "400" : props.size === "large" ? "650" : "500"};
   width: ${(props) =>
     props.size === "small"
       ? "50px"
       : props.size === "large"
-      ? "100px"
+      ? "310px"
       : "75px"};
   height: ${(props) =>
-    props.size === "small"
-      ? "1.75rem"
-      : props.size === "large"
-      ? "3rem"
-      : "2.25rem"};
+    props.size === "small" ? "35px" : props.size === "large" ? "35px" : "35px"};
+  background-color: ${({ theme }) => theme.color.bg200};
 
   :hover {
-    background-color: ${({ theme }) => theme.color.bg200};
+    background-color: ${({ theme }) => theme.color.bg100};
   }
 `;
 

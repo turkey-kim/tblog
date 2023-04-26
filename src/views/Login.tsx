@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import postLogin from "../businessLogic/logIn/postLogin";
 import useInput from "../hooks/useInput";
+import Button from "../components/Button";
 
 function Login() {
   const navigate = useNavigate();

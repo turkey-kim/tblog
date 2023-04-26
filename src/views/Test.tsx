@@ -15,10 +15,14 @@ function Test() {
           withCredentials: true,
         })
         .then((response) => {
-          console.log(response);
+          if (response.data.tokenValidity) {
+            console.log("토큰인증성공");
+          } else {
+            console.log("토큰인증실패");
+          }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          console.error(error);
         });
     } else {
       alert("발급받은 토큰이 없습니다.");

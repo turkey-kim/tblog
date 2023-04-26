@@ -4,9 +4,6 @@ import Button from "./Button";
 
 function Header() {
   const navigate = useNavigate();
-  const login = function (): void {
-    navigate("/login");
-  };
   const main = function (): void {
     navigate("/");
   };
@@ -14,7 +11,13 @@ function Header() {
     <div>
       <HeaderBox>
         <Title onClick={main}>Tblog</Title>
-        <Button onClick={login} text="LOGIN" size="medium"></Button>
+        <Button
+          onClick={() => {
+            navigate("/login");
+          }}
+          text="LOGIN"
+          size="medium"
+        ></Button>
       </HeaderBox>
     </div>
   );

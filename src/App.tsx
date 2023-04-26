@@ -14,19 +14,15 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./modules/isLoggedin";
 import { RootState } from "./modules";
+import useTokenChecker from "./hooks/useTokenChecker";
 
 function App() {
   const loginState = useSelector((state: RootState) => state.isLoggedIn);
   const dispatch = useDispatch();
+  //const [tokenValidity] = useTokenChecker(); 렌더링될 때마다 요청된다;
 
   useEffect(() => {
-    const tokenChecker = localStorage.getItem("jwt");
-    if (tokenChecker) {
-      dispatch(login());
-    } else {
-      dispatch(logout());
-    }
-    console.log(loginState);
+    alert(loginState.isLoggedIn);
   }, []);
 
   return (
