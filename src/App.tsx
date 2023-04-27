@@ -15,16 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./modules/isLoggedin";
 import { RootState } from "./modules";
 import useTokenChecker from "./hooks/useTokenChecker";
+import PrivateRoute from "./routes/PrivateRoutes";
+import Private from "./views/Private";
 
 function App() {
-  const loginState = useSelector((state: RootState) => state.isLoggedIn);
-  const dispatch = useDispatch();
-  //const [tokenValidity] = useTokenChecker(); 렌더링될 때마다 요청된다;
-
-  useEffect(() => {
-    alert(loginState.isLoggedIn);
-  }, []);
-
   return (
     <div className="App">
       <MyGlobalStyle theme={myTheme} />
@@ -39,6 +33,9 @@ function App() {
             <Route path="/post" element={<Post />} />
             <Route path="/test" element={<Test />} />
             <Route path="/mypage" element={<>My Page</>} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/private" element={<Private />} />
+            </Route>
           </Routes>
         </Body>
       </ThemeProvider>

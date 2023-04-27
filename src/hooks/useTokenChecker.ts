@@ -18,6 +18,7 @@ function useTokenChecker() {
         setTokenValid(true);
       } else {
         console.log("토큰인증실패");
+        setTokenValid(false);
       }
     })
     .catch((error) => {

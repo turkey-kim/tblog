@@ -5,10 +5,20 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import thunk from "redux-thunk";
+import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./modules";
+import { composeWithDevTools } from "@redux-devtools/extension";
 
-const store = createStore(rootReducer);
+const middleware = [thunk];
+
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(
+    applyMiddleware(...middleware)
+    // other store enhancers if any
+  )
+);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
