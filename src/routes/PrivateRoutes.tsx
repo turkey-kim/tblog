@@ -1,20 +1,15 @@
-import React, { ReactElement } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
+import axios from "axios";
 
-import useTokenChecker from "../hooks/useTokenChecker";
+function PrivateRoute() {
+  const [isTokenValid, setIsTokenValid] = useState(true);
 
-interface PrivateRouteProps {
-  children?: React.ReactElement;
-}
-
-function PrivateRoute(): React.ReactElement | null {
-  const [tokenValid] = useTokenChecker();
-  console.log("asd" + tokenValid);
-  if (tokenValid === true) {
+  if (isTokenValid) {
     return <Outlet />;
   } else {
-    console.log(tokenValid);
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 }
+
 export default PrivateRoute;

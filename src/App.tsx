@@ -10,37 +10,59 @@ import { ThemeProvider } from "styled-components";
 import EditPost from "./views/EditPost";
 import Post from "./views/Post";
 import Test from "./views/Test";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./modules/isLoggedin";
 import { RootState } from "./modules";
 import useTokenChecker from "./hooks/useTokenChecker";
 import PrivateRoute from "./routes/PrivateRoutes";
 import Private from "./views/Private";
+import axios from "axios";
 
 function App() {
-  return (
-    <div className="App">
-      <MyGlobalStyle theme={myTheme} />
-      <ThemeProvider theme={myTheme}>
-        <Header></Header>
-        <Body>
-          <Routes>
-            <Route path="/" element={<Home></Home>} />
-            <Route path="/login" element={<Login></Login>} />
-            <Route path="/sign_up" element={<SignUp></SignUp>} />
-            <Route path="/edit" element={<EditPost />} />
-            <Route path="/post" element={<Post />} />
-            <Route path="/test" element={<Test />} />
-            <Route path="/mypage" element={<>My Page</>} />
-            <Route element={<PrivateRoute />}>
+  let [isTokenValid] = useTokenChecker();
+
+  if (isTokenValid) {
+    return (
+      <div className="App">
+        <MyGlobalStyle theme={myTheme} />
+        <ThemeProvider theme={myTheme}>
+          <Header></Header>
+          <Body>
+            <Routes>
+              <Route path="/" element={<Home></Home>} />
+              <Route path="/login" element={<Login></Login>} />
+              <Route path="/sign_up" element={<SignUp></SignUp>} />
+              <Route path="/edit" element={<EditPost />} />
+              <Route path="/post" element={<Post />} />
+              <Route path="/test" element={<Test />} />
               <Route path="/private" element={<Private />} />
-            </Route>
-          </Routes>
-        </Body>
-      </ThemeProvider>
-    </div>
-  );
+            </Routes>
+          </Body>
+        </ThemeProvider>
+      </div>
+    );
+  } else {
+    return (
+      <div className="App">
+        <MyGlobalStyle theme={myTheme} />
+        <ThemeProvider theme={myTheme}>
+          <Header></Header>
+          <Body>
+            <Routes>
+              <Route path="/" element={<Home></Home>} />
+              <Route path="/login" element={<Login></Login>} />
+              <Route path="/sign_up" element={<SignUp></SignUp>} />
+              <Route path="/edit" element={<EditPost />} />
+              <Route path="/post" element={<Post />} />
+              <Route path="/test" element={<Test />} />
+              <Route path="/private" element={<Login />} />
+            </Routes>
+          </Body>
+        </ThemeProvider>
+      </div>
+    );
+  }
 }
 
 const Body = styled.div`
