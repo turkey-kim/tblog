@@ -15,7 +15,7 @@ function Login() {
 
   function submitLogin(e: FormEvent) {
     e.preventDefault();
-    postLogin(id, pw);
+    postLogin(id, pw, navigate);
   }
 
   return (

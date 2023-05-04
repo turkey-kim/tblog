@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function useTokenChecker() {
-  const [isTokenValid, setIsTokenValid] = useState(false);
+  let [isTokenValid, setIsTokenValid] = useState(false);
+  let [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let token = localStorage.getItem("jwt");
@@ -18,9 +19,11 @@ function useTokenChecker() {
           .then((response) => {
             if (response.data.tokenValidity) {
               console.log("갱신결과 : " + response.data.tokenValidity);
+              setIsLoading(false);
               setIsTokenValid(true);
             } else if (!response.data.tokenValidity) {
               console.log("갱신결과 : " + response.data.tokenValidity);
+              setIsLoading(false);
               setIsTokenValid(false);
             }
           });
@@ -28,11 +31,12 @@ function useTokenChecker() {
         console.error(error);
       }
     } else {
-      alert("로그인하세요");
+      setIsLoading(false);
+      setIsTokenValid(false);
     }
-  }, []);
+  }, [isLoading, isTokenValid]);
 
-  return [isTokenValid];
+  return [isTokenValid, isLoading];
 }
 
 export default useTokenChecker;

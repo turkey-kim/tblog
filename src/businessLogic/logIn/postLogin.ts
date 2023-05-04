@@ -1,7 +1,7 @@
 import axios from "axios";
-import { redirect } from "react-router-dom";
+import { NavigateFunction } from "react-router-dom";
 
-function postLogin(id: string, pw: string) {
+function postLogin(id: string, pw: string, navigate: NavigateFunction) {
   axios
     .post(
       "http://localhost:5000/login",
@@ -15,7 +15,7 @@ function postLogin(id: string, pw: string) {
     )
     .then((response) => {
       localStorage.setItem("jwt", response.data.token);
-      redirect("/");
+      navigate("/");
     })
     .catch((err) => {
       console.log("login error", err);
