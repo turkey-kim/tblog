@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { Navigate } from "react-router-dom";
-import useTokenChecker from "../hooks/useTokenChecker";
+import useTokenChecker from "../utils/hooks/useTokenChecker";
 
 interface PrivateRouteProps {
   children: ReactElement;

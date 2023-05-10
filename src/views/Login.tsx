@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import useInput from "../hooks/useInput";
+import useInput from "../utils/hooks/useInput";
 import sendUserInfo from "../api/sendUserInfo";
 
 function Login() {

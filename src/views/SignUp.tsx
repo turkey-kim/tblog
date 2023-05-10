@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import useIdChecker from "../hooks/signUp/idChecker";
-import useInput from "../hooks/useInput";
-import { isPasswordValid } from "../businessLogic/signUp";
+import useIdChecker from "../utils/hooks/signUp/useIdChecker";
+import useInput from "../utils/hooks/useInput";
+import { isPasswordValid } from "../helper/signUp";
 import sendUserInfo from "../api/sendUserInfo";
 
 function Login() {
-  const title: string = "회원가입";
   const navigate = useNavigate();
   const [text, setText] = useInput({
     id: "",
@@ -19,7 +18,7 @@ function Login() {
   const [pwAlert, setPwAlert] = useState(false);
   const apiEndpoint = "sign_up";
 
-  function checkWhiteSpace(id: string, pw: string, pw2: string): boolean {
+  function isBlank(id: string, pw: string, pw2: string): boolean {
     if (id && pw && pw2 != "") {
       return false;
     } else {
@@ -27,7 +26,7 @@ function Login() {
     }
   }
 
-  function isPasswordMatch(pw: string, pw2: string): boolean {
+  function comparePassword(pw: string, pw2: string): boolean {
     if (pw == pw2) {
       return true;
     } else {
@@ -37,25 +36,32 @@ function Login() {
 
   async function signUpSubmit(e: React.MouseEvent) {
     e.preventDefault();
-    if (idValidity) {
-      alert("중복된 아이디입니다, 다른 아이디를 입력해주세요");
-    } else if (checkWhiteSpace(id, pw, pw2) == true) {
-      alert("빈칸을 모두 채워주세요.");
-    } else if (isPasswordMatch(pw, pw2) == false) {
-      alert("비밀번호가 일치하지 않습니다.");
-      setPwAlert(true);
-    } else if (isPasswordValid(pw) == false) {
-      alert("비밀번호는 영문자, 숫자, 특수문자를 포함한 8-20글자여야 합니다.");
-    } else {
-      setPwAlert(false);
-      try {
-        await sendUserInfo(id, pw, apiEndpoint);
-        alert("회원가입되셨습니다.");
-        navigate("/login");
-      } catch (err) {
-        alert("회원가입 실패");
-        console.error(err);
-      }
+    switch (true) {
+      case idValidity:
+        alert("중복된 아이디입니다, 다른 아이디를 입력해주세요");
+        break;
+      case isBlank(id, pw, pw2):
+        alert("빈칸을 모두 채워주세요.");
+        break;
+      case !comparePassword(pw, pw2):
+        alert("비밀번호가 일치하지 않습니다.");
+        setPwAlert(true);
+        break;
+      case !isPasswordValid(pw):
+        alert(
+          "비밀번호는 영문자, 숫자, 특수문자를 포함한 8-20글자여야 합니다."
+        );
+        break;
+      default:
+        setPwAlert(false);
+        try {
+          await sendUserInfo(id, pw, apiEndpoint);
+          alert("회원가입되셨습니다.");
+          navigate("/login");
+        } catch (err) {
+          alert("회원가입 실패");
+          console.error(err);
+        }
     }
   }
 
@@ -109,7 +115,7 @@ function Login() {
                   ""
                 )}
                 <SubmitButton type="submit" onClick={signUpSubmit}>
-                  {title}
+                  회원가입
                 </SubmitButton>
               </LoginForm>
             </div>

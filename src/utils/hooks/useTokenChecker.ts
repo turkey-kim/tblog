@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import tokenAuthorization from "../api/authWithToken";
+import tokenAuthorization from "../../api/authWithToken";
 
 function useTokenChecker() {
   let [isTokenValid, setIsTokenValid] = useState(false);
