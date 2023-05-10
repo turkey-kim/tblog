@@ -14,7 +14,8 @@ const EditPost = () => {
   };
 
   return (
-    <Container>
+    <Container data-color-mode="light">
+      <div className="wmde-markdown-var"></div>
       <MDEditor value={markdown} onChange={onChangeValue} />
       {/* <MDEditor.Markdown source={markdown} style={{ whiteSpace: "pre-wrap" }} /> */}
     </Container>
@@ -22,8 +23,8 @@ const EditPost = () => {
 };
 
 const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 `;
 
 export default EditPost;

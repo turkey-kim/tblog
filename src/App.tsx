@@ -3,21 +3,15 @@ import styled from "styled-components";
 import Login from "./views/Login";
 import SignUp from "./views/SignUp";
 import Home from "./views/Home";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { MyGlobalStyle, myTheme } from "./style";
 import { ThemeProvider } from "styled-components";
 import EditPost from "./views/EditPost";
 import Post from "./views/Post";
 import Test from "./views/Test";
-import { ChangeEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "./modules/isLoggedin";
-import { RootState } from "./modules";
-import useTokenChecker from "./hooks/useTokenChecker";
 import PrivateRoute from "./routes/PrivateRoutes";
 import Private from "./views/Private";
-import axios from "axios";
 
 function App() {
   return (
@@ -52,6 +46,8 @@ const Body = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100;
 `;
 
 export default App;

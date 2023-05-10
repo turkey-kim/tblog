@@ -3,12 +3,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useIdChecker from "../hooks/signUp/idChecker";
 import useInput from "../hooks/useInput";
-import {
-  checkWhiteSpace,
-  isPasswordValid,
-  isPasswordMatch,
-} from "../businessLogic/signUp";
-import postSignUp from "../businessLogic/signUp/postSignup";
+import { isPasswordValid } from "../businessLogic/signUp";
+import sendUserInfo from "../api/sendUserInfo";
 
 function Login() {
   const title: string = "회원가입";
@@ -21,8 +17,25 @@ function Login() {
   const { id, pw, pw2 } = text;
   const [idValidity] = useIdChecker(id);
   const [pwAlert, setPwAlert] = useState(false);
+  const apiEndpoint = "sign_up";
 
-  function signUpSubmit(e: React.MouseEvent) {
+  function checkWhiteSpace(id: string, pw: string, pw2: string): boolean {
+    if (id && pw && pw2 != "") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  function isPasswordMatch(pw: string, pw2: string): boolean {
+    if (pw == pw2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async function signUpSubmit(e: React.MouseEvent) {
     e.preventDefault();
     if (idValidity) {
       alert("중복된 아이디입니다, 다른 아이디를 입력해주세요");
@@ -35,7 +48,14 @@ function Login() {
       alert("비밀번호는 영문자, 숫자, 특수문자를 포함한 8-20글자여야 합니다.");
     } else {
       setPwAlert(false);
-      postSignUp(id, pw);
+      try {
+        await sendUserInfo(id, pw, apiEndpoint);
+        alert("회원가입되셨습니다.");
+        navigate("/login");
+      } catch (err) {
+        alert("회원가입 실패");
+        console.error(err);
+      }
     }
   }
 

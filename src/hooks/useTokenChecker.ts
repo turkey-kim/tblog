@@ -1,35 +1,27 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import tokenAuthorization from "../api/authWithToken";
 
 function useTokenChecker() {
   let [isTokenValid, setIsTokenValid] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
+  const apiEndpoint = "api/check_token";
 
   useEffect(() => {
     let token = localStorage.getItem("jwt");
-    if (token) {
-      try {
-        axios
-          .get("http://localhost:5000/api/check_token", {
-            headers: {
-              Authorization: token,
-            },
-            withCredentials: true,
-          })
-          .then((response) => {
-            if (response.data.tokenValidity) {
-              console.log("갱신결과 : " + response.data.tokenValidity);
-              setIsLoading(false);
-              setIsTokenValid(true);
-            } else if (!response.data.tokenValidity) {
-              console.log("갱신결과 : " + response.data.tokenValidity);
-              setIsLoading(false);
-              setIsTokenValid(false);
-            }
-          });
-      } catch (error) {
-        console.error(error);
+    async function sendToken() {
+      const response = await tokenAuthorization(token, apiEndpoint);
+      if (response.data.tokenValidity) {
+        console.log("갱신결과 : " + response.data.tokenValidity);
+        setIsLoading(false);
+        setIsTokenValid(true);
+      } else if (!response.data.tokenValidity) {
+        console.log("갱신결과 : " + response.data.tokenValidity);
+        setIsLoading(false);
+        setIsTokenValid(false);
       }
+    }
+    if (token) {
+      sendToken();
     } else {
       setIsLoading(false);
       setIsTokenValid(false);

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import postUserInfo from "../../api/sendUserInfo";
 
 function useIdChecker(id: string) {
   const [idValidity, setValidity] = useState(false);

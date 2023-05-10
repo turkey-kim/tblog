@@ -1,9 +1,8 @@
 import { FormEvent } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import postLogin from "../businessLogic/logIn/postLogin";
 import useInput from "../hooks/useInput";
-import Button from "../components/Button";
+import sendUserInfo from "../api/sendUserInfo";
 
 function Login() {
   const navigate = useNavigate();
@@ -11,11 +10,24 @@ function Login() {
     id: "",
     pw: "",
   });
-  const { id, pw } = text;
 
-  function submitLogin(e: FormEvent) {
+  const { id, pw } = text;
+  const apiEndpoint = "login";
+
+  async function submitLogin(e: FormEvent) {
     e.preventDefault();
-    postLogin(id, pw, navigate);
+    try {
+      const response = await sendUserInfo(id, pw, apiEndpoint);
+
+      if (response?.data.token == undefined) {
+        alert("잘못된 회원정보입니다.");
+      } else {
+        localStorage.setItem("jwt", response?.data.token);
+        navigate("/");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (

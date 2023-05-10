@@ -21,13 +21,13 @@ function Home() {
   const onClickSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     let arrClone: string[] = [...arr];
     arrClone.push(content);
-    setArr(arrClone);
+    setArr([...arr, content]);
     localStorage.setItem("contents", JSON.stringify(arrClone));
     setContent("");
   };
 
   return (
-    <div style={{ flexDirection: "column", justifyContent: "center" }}>
+    <Container>
       <p>This is Main page!</p>
       <WritingForm>
         <WritingSpace
@@ -48,9 +48,14 @@ function Home() {
           );
         })}
       </CardDeque>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+`;
 
 const WritingForm = styled.div`
   display: flex;
@@ -82,10 +87,11 @@ const SubmitButton = styled.button`
 `;
 
 const CardDeque = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(100px, auto);
-  grid-gap: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Card = styled.div`
@@ -96,6 +102,10 @@ const Card = styled.div`
   height: 400px;
   background-color: ${({ theme }) => theme.color.bg150};
   border-radius: 5px;
+
+  :last-child {
+    justify-self: flex-end;
+  }
 `;
 
 export default Home;
