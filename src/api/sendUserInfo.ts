@@ -1,7 +1,11 @@
 import { SERVER_API_ADDRESS } from "../constants/link";
 import axios from "axios";
 
-function sendUserInfo(id?: string, pw?: string, apiEndpoint?: string) {
+function sendUserInfo(
+  id?: string | null,
+  pw?: string | null,
+  apiEndpoint?: string | null
+) {
   return axios
     .post(
       `${SERVER_API_ADDRESS}/${apiEndpoint}`,

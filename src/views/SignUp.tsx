@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import useIdChecker from "../utils/hooks/signUp/useIdChecker";
 import useInput from "../utils/hooks/useInput";
-import { isPasswordValid } from "../helper/signUp";
+import { isPasswordValid, idChecker } from "../helper/signUp";
 import sendUserInfo from "../api/sendUserInfo";
 
 function Login() {
@@ -14,7 +13,6 @@ function Login() {
     pw2: "",
   });
   const { id, pw, pw2 } = text;
-  const [idValidity] = useIdChecker(id);
   const [pwAlert, setPwAlert] = useState(false);
   const apiEndpoint = "sign_up";
 
@@ -36,8 +34,9 @@ function Login() {
 
   async function signUpSubmit(e: React.MouseEvent) {
     e.preventDefault();
+    const isIdValid = await idChecker(id);
     switch (true) {
-      case idValidity:
+      case isIdValid:
         alert("중복된 아이디입니다, 다른 아이디를 입력해주세요");
         break;
       case isBlank(id, pw, pw2):
