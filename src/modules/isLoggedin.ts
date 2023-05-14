@@ -1,4 +1,6 @@
-const LOGIN = "isLoggedIn/LOGIN" as const;
+// ducks pattern =  액션타입, 액션생성함수, 리듀서 한 파일에 저장하는 패턴 사용
+
+const LOGIN = "isLoggedIn/LOGIN" as const; //액션 타입 선언
 const LOGOUT = "isLoggedIn/LOGOUT" as const;
 
 export const login = () => ({

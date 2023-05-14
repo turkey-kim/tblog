@@ -1,24 +1,42 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./Button";
+import { RootState } from "../modules";
+import { useSelector } from "react-redux";
 
 function Header() {
   const navigate = useNavigate();
   const main = function (): void {
     navigate("/");
   };
+
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.isLoggedIn.isLoggedIn
+  );
+
   return (
     <div>
       <HeaderBox>
         <Title onClick={main}>Tblog</Title>
-        <Button
-          onClick={() => {
-            navigate("/login");
-          }}
-          text="LOGIN"
-          size="medium"
-          color="light"
-        ></Button>
+        {isLoggedIn ? (
+          <Button
+            onClick={() => {
+              console.log(isLoggedIn);
+            }}
+            text="LOGOUT"
+            size="medium"
+            color="light"
+          ></Button>
+        ) : (
+          <Button
+            onClick={() => {
+              navigate("/login");
+            }}
+            text="LOGIN"
+            size="medium"
+            color="light"
+          ></Button>
+        )}
       </HeaderBox>
     </div>
   );

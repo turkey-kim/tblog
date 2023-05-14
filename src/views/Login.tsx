@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useInput from "../utils/hooks/useInput";
 import sendUserInfo from "../api/sendUserInfo";
+import { useDispatch } from "react-redux";
+import { login } from "../modules/isLoggedin";
 
 function Login() {
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ function Login() {
 
   const { id, pw } = text;
   const apiEndpoint = "login";
+  const dispatch = useDispatch();
 
   async function submitLogin(e: FormEvent) {
     e.preventDefault();
@@ -23,6 +26,7 @@ function Login() {
         alert("잘못된 회원정보입니다.");
       } else {
         localStorage.setItem("jwt", response?.data.token);
+        dispatch(login());
         navigate("/");
       }
     } catch (err) {
