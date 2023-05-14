@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Button from "./Button";
 import { RootState } from "../modules";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logout } from "../modules/isLoggedin";
 
 function Header() {
   const navigate = useNavigate();
@@ -14,6 +16,8 @@ function Header() {
     (state: RootState) => state.isLoggedIn.isLoggedIn
   );
 
+  const dispatch = useDispatch();
+
   return (
     <div>
       <HeaderBox>
@@ -21,7 +25,8 @@ function Header() {
         {isLoggedIn ? (
           <Button
             onClick={() => {
-              console.log(isLoggedIn);
+              dispatch(logout());
+              localStorage.removeItem("jwt");
             }}
             text="LOGOUT"
             size="medium"
