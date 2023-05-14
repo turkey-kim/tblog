@@ -100,7 +100,7 @@ const Card = styled.div`
   margin: 15px;
   width: 300px;
   height: 400px;
-  background-color: ${({ theme }) => theme.color.bg150};
+  background-color: ${({ theme }) => theme.color.white};
   border-radius: 5px;
 
   :last-child {

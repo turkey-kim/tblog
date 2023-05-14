@@ -1,4 +1,4 @@
-import React, { useId, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useInput from "../utils/hooks/useInput";
@@ -172,7 +172,6 @@ const LoginBox = styled.div`
   width: 450px;
   height: 450px;
   border-radius: 10px;
-  margin-top: 100px;
 
   @media ${({ theme }) => theme.device.tablet} {
     width: 380px;

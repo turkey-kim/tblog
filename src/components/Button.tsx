@@ -2,17 +2,25 @@ import styled from "styled-components";
 import React from "react";
 
 type ButtonSize = "small" | "medium" | "large";
+type ButtonColor = "light" | "dark";
 
 interface Props {
   onClick(): any;
   type?: string;
   text?: string;
   size?: ButtonSize;
+  color?: ButtonColor;
 }
 
-function Button({ onClick, type, text, size }: Props): React.ReactElement {
+function Button({
+  onClick,
+  type,
+  text,
+  size,
+  color,
+}: Props): React.ReactElement {
   return (
-    <Btn onClick={onClick} size={size}>
+    <Btn onClick={onClick} size={size} color={color}>
       {text}
     </Btn>
   );
@@ -34,10 +42,13 @@ const Btn = styled.button<Props>`
       : "75px"};
   height: ${(props) =>
     props.size === "small" ? "35px" : props.size === "large" ? "35px" : "35px"};
-  background-color: ${({ theme }) => theme.color.bg200};
+  background-color: ${(props) =>
+    props.color === "light"
+      ? props.theme.color.bg100
+      : props.theme.color.dark100};
 
   :hover {
-    background-color: ${({ theme }) => theme.color.bg100};
+    background-color: ${({ theme }) => theme.color.bg150};
   }
 `;
 

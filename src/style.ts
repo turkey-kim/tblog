@@ -2,9 +2,15 @@ import { createGlobalStyle, DefaultTheme } from "styled-components";
 import "./App.css";
 
 export interface Icolor {
-  bg200: string;
-  bg150: string;
+  bg50: string;
   bg100: string;
+  bg150: string;
+  bg200: string;
+  dark100: string;
+  dark150: string;
+  dark200: string;
+  white: string;
+  black: string;
 }
 
 export interface IfontSize {
@@ -21,9 +27,15 @@ interface Theme {
 }
 
 const color = {
-  bg200: "#D0B495",
-  bg150: "#E9D5B4",
-  bg100: "#E6E2D6",
+  bg50: "#F8F9FA",
+  bg100: "#F3F3F3",
+  bg150: "#E4E4E4",
+  bg200: "#C4C4C4",
+  dark100: "#585858",
+  dark150: "#404040",
+  dark200: "#333333",
+  white: "#FFFFFF",
+  black: "#262626",
 };
 
 const fontSize = {
@@ -54,7 +66,9 @@ export const myTheme: DefaultTheme = {
 export const MyGlobalStyle = createGlobalStyle<{ theme: Theme }>`
     body{
         font-family: 'Nanum Gothic', sans-serif;
-        background-color: ${(props) => props.theme.color?.bg100};
+        background-color: ${(props) => props.theme.color?.bg50};
         font-size : ${(props) => props.theme.fontSize?.medium};
+        color : ${(props) => props.theme.color?.black};
+        
     }
 `;

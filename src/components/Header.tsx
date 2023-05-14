@@ -17,6 +17,7 @@ function Header() {
           }}
           text="LOGIN"
           size="medium"
+          color="light"
         ></Button>
       </HeaderBox>
     </div>
@@ -28,7 +29,7 @@ const HeaderBox = styled.div`
   flex-direction: row;
   justify-content: "space-between";
   padding: none;
-  background-color: ${({ theme }) => theme.color.bg150};
+  background-color: ${({ theme }) => theme.color.black};
   height: 50px;
   justify-content: space-between;
   padding: 0px 20px 0px 20px;
@@ -38,6 +39,7 @@ const HeaderBox = styled.div`
 const Title = styled.div`
   font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: 700;
+  color: ${({ theme }) => theme.color.white};
   cursor: pointer;
 `;
 
