@@ -27,6 +27,7 @@ function Header() {
             onClick={() => {
               dispatch(logout());
               localStorage.removeItem("jwt");
+              window.location.reload();
             }}
             text="LOGOUT"
             size="medium"

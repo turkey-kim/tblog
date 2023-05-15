@@ -12,8 +12,25 @@ import Post from "./views/Post";
 import Test from "./views/Test";
 import PrivateRoute from "./routes/PrivateRoutes";
 import Private from "./views/Private";
+import { useEffect } from "react";
+import useTokenChecker from "./utils/hooks/useTokenChecker";
+import { useDispatch } from "react-redux";
+import { login, logout } from "./modules/isLoggedin";
 
 function App() {
+  let [isTokenValid] = useTokenChecker();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (isTokenValid) {
+        dispatch(login());
+      } else {
+        dispatch(logout());
+      }
+    }, 1000);
+  }, [isTokenValid]);
+
   return (
     <div className="App">
       <MyGlobalStyle theme={myTheme} />
