@@ -44,7 +44,6 @@ function Login() {
         alert("빈칸을 모두 채워주세요.");
         break;
       case !comparePassword(pw, pw2):
-        alert("비밀번호가 일치하지 않습니다.");
         setPwAlert(true);
         break;
       case !isPasswordValid(pw):
@@ -112,12 +111,12 @@ function Login() {
                 <InputBox
                   name="pw2"
                   type="password"
-                  placeholder="비밀번호를 확인해주세요"
+                  placeholder="비밀번호를 재확인해주세요"
                   value={pw2}
                   onChange={setText}
                 ></InputBox>
                 {pwAlert === true ? (
-                  <PasswordAlert>비밀번호를 재확인하시오</PasswordAlert>
+                  <PasswordAlert>비밀번호를 재확인하세요</PasswordAlert>
                 ) : (
                   ""
                 )}
@@ -173,13 +172,14 @@ const LoginField = styled.div`
 `;
 
 const LoginBox = styled.div`
-  background-color: ${({ theme }) => theme.color.bg150};
+  background-color: ${({ theme }) => theme.color.dark200};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 450px;
-  height: 470px;
-  border-radius: 10px;
+  height: 500px;
+  border-radius: 15px;
+  color: ${({ theme }) => theme.color.white};
 
   @media ${({ theme }) => theme.device.tablet} {
     width: 380px;
@@ -195,18 +195,20 @@ const SignIn = styled.button`
   width: 100%;
   height: 40px;
   border: none;
-  border-radius: 10px 0 0 0;
+  border-radius: 15px 0 0 0;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.color.bg200};
+  background-color: ${({ theme }) => theme.color.dark100};
+  color: ${({ theme }) => theme.color.white};
 `;
 
 const SignUp = styled.button`
   width: 100%;
   height: 40px;
   border: none;
-  border-radius: 0 10px 0 0;
+  border-radius: 0 15px 0 0;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.color.bg150};
+  background-color: ${({ theme }) => theme.color.dark200};
+  color: ${({ theme }) => theme.color.white};
 `;
 
 interface LabelProps {
@@ -263,8 +265,9 @@ const SubmitButton = styled.button`
 `;
 
 const PasswordAlert = styled.div`
-  color: red;
+  margin-top: 10px;
+  color: ${({ theme }) => theme.color.white};
   font-size: small;
+  font-weight: 600;
 `;
-
 export default Login;

@@ -135,7 +135,7 @@ const LoginBox = styled.div`
   justify-content: space-between;
   width: 450px;
   height: 450px;
-  border-radius: 10px;
+  border-radius: 15px;
 
   @media ${({ theme }) => theme.device.tablet} {
     width: 380px;
@@ -151,7 +151,7 @@ const SignIn = styled.button`
   width: 100%;
   height: 40px;
   border: none;
-  border-radius: 10px 0 0 0;
+  border-radius: 15px 0 0 0;
   font-weight: 600;
   background-color: ${({ theme }) => theme.color.dark200};
   color: ${({ theme }) => theme.color.white};
@@ -161,7 +161,7 @@ const SignUp = styled.button`
   width: 100%;
   height: 40px;
   border: none;
-  border-radius: 0 10px 0 0;
+  border-radius: 0 15px 0 0;
   font-weight: 600;
   background-color: ${({ theme }) => theme.color.dark100};
   color: ${({ theme }) => theme.color.white};
@@ -198,13 +198,13 @@ const InputBox = styled.input`
 `;
 
 const SubmitButton = styled.button`
-  margin-top: 30px;
+  margin-top: 50px;
   width: 82%;
   outline: none;
   height: 35px;
   text-decoration: none;
   cursor: pointer;
-  background-color: ${({ theme }) => theme.color.bg150};
+  background-color: ${({ theme }) => theme.color.bg200};
   border: none;
   border-radius: 2px;
   font-size: medium;
