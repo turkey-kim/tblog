@@ -9,7 +9,7 @@ export function isPasswordValid(pw: string): boolean {
 export async function idChecker(id: string) {
   const apiEndpoint = "api/id_checker";
   try {
-    const response = await sendUserInfo(id, null, apiEndpoint);
+    const response = await sendUserInfo(id, null, null, apiEndpoint);
     const result = response.data.duplicate;
     return result;
   } catch (error) {

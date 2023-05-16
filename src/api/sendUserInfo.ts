@@ -4,6 +4,7 @@ import axios from "axios";
 function sendUserInfo(
   id?: string | null,
   pw?: string | null,
+  nickname?: string | null,
   apiEndpoint?: string | null
 ) {
   return axios
@@ -12,6 +13,7 @@ function sendUserInfo(
       {
         id: id,
         pw: pw,
+        nickname: nickname,
       },
       {
         withCredentials: true,

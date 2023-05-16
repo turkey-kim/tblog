@@ -5,6 +5,7 @@ import useInput from "../utils/hooks/useInput";
 import sendUserInfo from "../api/sendUserInfo";
 import { useDispatch } from "react-redux";
 import { login } from "../modules/isLoggedin";
+import { setUserProfile } from "../modules/userProfile";
 
 function Login() {
   const navigate = useNavigate();
@@ -20,13 +21,19 @@ function Login() {
   async function submitLogin(e: FormEvent) {
     e.preventDefault();
     try {
-      const response = await sendUserInfo(id, pw, apiEndpoint);
+      const response = await sendUserInfo(id, pw, null, apiEndpoint);
 
       if (response?.data.token == undefined) {
         alert("잘못된 회원정보입니다.");
       } else {
-        localStorage.setItem("jwt", response?.data.token);
+        // 토큰 및 유저 프로필 저장
+        localStorage.setItem("jwt", response.data.token);
+        const userProfile = {
+          id: response.data.profile.id,
+          nickname: response.data.profile.nickname,
+        };
         dispatch(login());
+        dispatch(setUserProfile(userProfile));
         navigate("/");
       }
     } catch (err) {

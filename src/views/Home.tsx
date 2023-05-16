@@ -28,7 +28,6 @@ function Home() {
 
   return (
     <Container>
-      <p>This is Main page!</p>
       <WritingForm>
         <WritingSpace
           id="writingSpace"
@@ -58,6 +57,7 @@ const Container = styled.div`
 `;
 
 const WritingForm = styled.div`
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   width: 100%;

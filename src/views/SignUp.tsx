@@ -11,8 +11,9 @@ function Login() {
     id: "",
     pw: "",
     pw2: "",
+    nicknname: "",
   });
-  const { id, pw, pw2 } = text;
+  const { id, pw, pw2, nickname } = text;
   const [pwAlert, setPwAlert] = useState(false);
   const apiEndpoint = "sign_up";
 
@@ -54,7 +55,7 @@ function Login() {
       default:
         setPwAlert(false);
         try {
-          await sendUserInfo(id, pw, apiEndpoint);
+          await sendUserInfo(id, pw, nickname, apiEndpoint);
           alert("회원가입되셨습니다.");
           navigate("/login");
         } catch (err) {
@@ -86,14 +87,21 @@ function Login() {
                 <SignUp>회원가입</SignUp>
               </div>
               <LoginForm>
-                <Label>아이디</Label>
+                <Label marginTop="20px">아이디</Label>
                 <InputBox
                   name="id"
                   placeholder="사용하실 아이디를 입력하세요"
                   value={id}
                   onChange={setText}
                 ></InputBox>
-                <Label>비밀번호</Label>
+                <Label marginTop="5px">닉네임</Label>
+                <InputBox
+                  name="nickname"
+                  value={nickname}
+                  onChange={setText}
+                  placeholder="사용하실 닉네임을 입력하세요"
+                ></InputBox>
+                <Label marginTop="20px">비밀번호</Label>
                 <InputBox
                   name="pw"
                   type="password"
@@ -170,7 +178,7 @@ const LoginBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 450px;
-  height: 450px;
+  height: 470px;
   border-radius: 10px;
 
   @media ${({ theme }) => theme.device.tablet} {
@@ -201,10 +209,14 @@ const SignUp = styled.button`
   background-color: ${({ theme }) => theme.color.bg150};
 `;
 
-const Label = styled.div`
+interface LabelProps {
+  marginTop: string;
+}
+
+const Label = styled.div<LabelProps>`
   width: 80%;
   text-align: left;
-  margin-top: 20px;
+  margin-top: ${(props) => props.marginTop};
   margin-bottom: 5px;
   font-weight: 700;
   font-size: small;
@@ -216,7 +228,7 @@ const LoginForm = styled.form`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 20px;
 `;
 
 const InputBox = styled.input`

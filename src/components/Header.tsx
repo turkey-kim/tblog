@@ -5,6 +5,7 @@ import { RootState } from "../modules";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { logout } from "../modules/isLoggedin";
+import { clearUserProfile } from "../modules/userProfile";
 
 function Header() {
   const navigate = useNavigate();
@@ -23,25 +24,38 @@ function Header() {
       <HeaderBox>
         <Title onClick={main}>Tblog</Title>
         {isLoggedIn ? (
-          <Button
-            onClick={() => {
-              dispatch(logout());
-              localStorage.removeItem("jwt");
-              window.location.reload();
-            }}
-            text="LOGOUT"
-            size="medium"
-            color="light"
-          ></Button>
+          <AppContainer>
+            <Button
+              onClick={() => {
+                navigate("/edit");
+              }}
+              text="글쓰기"
+              size="medium"
+              color="light"
+            ></Button>
+            <Button
+              onClick={() => {
+                dispatch(logout());
+                dispatch(clearUserProfile(null));
+                localStorage.removeItem("jwt");
+                window.location.reload();
+              }}
+              text="LOGOUT"
+              size="medium"
+              color="light"
+            ></Button>
+          </AppContainer>
         ) : (
-          <Button
-            onClick={() => {
-              navigate("/login");
-            }}
-            text="LOGIN"
-            size="medium"
-            color="light"
-          ></Button>
+          <AppContainer>
+            <Button
+              onClick={() => {
+                navigate("/login");
+              }}
+              text="LOGIN"
+              size="medium"
+              color="light"
+            ></Button>
+          </AppContainer>
         )}
       </HeaderBox>
     </div>
@@ -67,9 +81,9 @@ const Title = styled.div`
   cursor: pointer;
 `;
 
-const Container = styled.div`
-  height: 40px;
-  width: 50px;
+const AppContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 160px;
 `;
-
 export default Header;

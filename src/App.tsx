@@ -14,22 +14,22 @@ import PrivateRoute from "./routes/PrivateRoutes";
 import Private from "./views/Private";
 import { useEffect } from "react";
 import useTokenChecker from "./utils/hooks/useTokenChecker";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./modules/isLoggedin";
+import { RootState } from "./modules";
 
 function App() {
-  let [isTokenValid] = useTokenChecker();
+  let [isTokenValid, isLoading] = useTokenChecker();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
-      if (isTokenValid) {
-        dispatch(login());
-      } else {
-        dispatch(logout());
-      }
-    }, 1000);
-  }, [isTokenValid]);
+    if (isLoading) {
+    } else if (isTokenValid) {
+      dispatch(login());
+    } else {
+      dispatch(logout());
+    }
+  }, [isTokenValid, isLoading]);
 
   return (
     <div className="App">
