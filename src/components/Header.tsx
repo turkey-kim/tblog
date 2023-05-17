@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { logout } from "../modules/isLoggedin";
 import { clearUserProfile } from "../modules/userProfile";
+import UserImage from "./UserImage";
 
 function Header() {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ function Header() {
   const isLoggedIn = useSelector(
     (state: RootState) => state.isLoggedIn.isLoggedIn
   );
+
+  const userProfile = useSelector((state: RootState) => state.userProfile);
 
   const dispatch = useDispatch();
 
@@ -29,7 +32,7 @@ function Header() {
               onClick={() => {
                 navigate("/edit");
               }}
-              text="글쓰기"
+              text={userProfile?.nickname}
               size="medium"
               color="light"
             ></Button>
@@ -38,12 +41,12 @@ function Header() {
                 dispatch(logout());
                 dispatch(clearUserProfile(null));
                 localStorage.removeItem("jwt");
-                window.location.reload();
               }}
               text="LOGOUT"
               size="medium"
               color="light"
             ></Button>
+            <UserImage size="small" onClick={() => {}}></UserImage>
           </AppContainer>
         ) : (
           <AppContainer>
@@ -86,4 +89,5 @@ const AppContainer = styled.div`
   justify-content: space-between;
   width: 160px;
 `;
+
 export default Header;
