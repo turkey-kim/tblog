@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../modules/isLoggedin";
 import { clearUserProfile } from "../modules/userProfile";
 import UserImage from "./UserImage";
+import Direction from "./directon";
 
 function Header() {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ function Header() {
               color="light"
             ></Button>
             <UserImage size="small" onClick={() => {}}></UserImage>
+            <Direction size="small" direction="down" color="light"></Direction>
           </AppContainer>
         ) : (
           <AppContainer>

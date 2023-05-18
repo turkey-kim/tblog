@@ -11,8 +11,8 @@ function UserImage({ onClick, size }: Props) {
   return (
     <ImageContainer>
       <UserProfile
-        src="image/userProfile.png"
-        sizes={size}
+        src="icon/userProfile.png"
+        size={size}
         onClick={onClick}
       ></UserProfile>
     </ImageContainer>
@@ -25,20 +25,20 @@ const ImageContainer = styled.div`
   align-items: center;
 `;
 
-const UserProfile = styled.img`
+const UserProfile = styled.img<Props>`
   background-color: ${({ theme }) => theme.color.bg150};
   border-radius: 50%;
   cursor: pointer;
   width: ${(props) =>
-    props.sizes === "small"
+    props.size === "small"
       ? "40px"
-      : props.sizes === "large"
+      : props.size === "large"
       ? "150px"
       : "80px"};
   height: ${(props) =>
-    props.sizes === "small"
+    props.size === "small"
       ? "40px"
-      : props.sizes === "large"
+      : props.size === "large"
       ? "150px"
       : "80px"};
 `;
