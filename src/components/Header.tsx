@@ -3,11 +3,10 @@ import styled from "styled-components";
 import Button from "./Button";
 import { RootState } from "../modules";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { logout } from "../modules/isLoggedin";
-import { clearUserProfile } from "../modules/userProfile";
 import UserImage from "./UserImage";
 import Direction from "./directon";
+import ToggleMenu from "./ToggleMeun";
+import { useState, useRef, useEffect } from "react";
 
 function Header() {
   const navigate = useNavigate();
@@ -15,13 +14,27 @@ function Header() {
     navigate("/");
   };
 
+  const toggleRef = useRef<HTMLDivElement>(null);
+  let [toggleOn, setToggleOn] = useState(false);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", toggleOutSideClick);
+    return () => {
+      document.removeEventListener("mousedown", toggleOutSideClick);
+    };
+  }, [toggleOn]);
+
+  const toggleOutSideClick = (e: any) => {
+    if (!toggleRef.current?.contains(e.target) && toggleOn) {
+      setToggleOn(false);
+    }
+  };
+
   const isLoggedIn = useSelector(
     (state: RootState) => state.isLoggedIn.isLoggedIn
   );
 
   const userProfile = useSelector((state: RootState) => state.userProfile);
-
-  const dispatch = useDispatch();
 
   return (
     <div>
@@ -37,17 +50,12 @@ function Header() {
               size="medium"
               color="light"
             ></Button>
-            <Button
+            <UserImage
+              size="small"
               onClick={() => {
-                dispatch(logout());
-                dispatch(clearUserProfile(null));
-                localStorage.removeItem("jwt");
+                setToggleOn(!toggleOn);
               }}
-              text="LOGOUT"
-              size="medium"
-              color="light"
-            ></Button>
-            <UserImage size="small" onClick={() => {}}></UserImage>
+            ></UserImage>
             <Direction size="small" direction="down" color="light"></Direction>
           </AppContainer>
         ) : (
@@ -63,6 +71,15 @@ function Header() {
           </AppContainer>
         )}
       </HeaderBox>
+      <ToggleContainer ref={toggleRef}>
+        {toggleOn ? (
+          <ToggleMenu
+            onClick={() => {
+              setToggleOn(false);
+            }}
+          ></ToggleMenu>
+        ) : null}
+      </ToggleContainer>
     </div>
   );
 }
@@ -88,8 +105,14 @@ const Title = styled.div`
 
 const AppContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 160px;
+  justify-content: right;
+  width: 50%;
+`;
+
+const ToggleContainer = styled.div`
+  display: flex;
+  justify-content: right;
+  margin-right: 1rem;
 `;
 
 export default Header;
