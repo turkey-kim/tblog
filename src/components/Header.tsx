@@ -15,6 +15,7 @@ function Header() {
   };
 
   const toggleRef = useRef<HTMLDivElement>(null);
+  const toggleButton = useRef<HTMLDivElement>(null);
   let [toggleOn, setToggleOn] = useState(false);
 
   useEffect(() => {
@@ -22,10 +23,12 @@ function Header() {
     return () => {
       document.removeEventListener("mousedown", toggleOutSideClick);
     };
-  }, [toggleOn]);
+  });
 
   const toggleOutSideClick = (e: any) => {
-    if (!toggleRef.current?.contains(e.target) && toggleOn) {
+    if (toggleButton.current?.contains(e.target)) {
+      return;
+    } else if (toggleOn && !toggleRef.current?.contains(e.target)) {
       setToggleOn(false);
     }
   };
@@ -41,7 +44,7 @@ function Header() {
       <HeaderBox>
         <Title onClick={main}>Tblog</Title>
         {isLoggedIn ? (
-          <AppContainer>
+          <AppContainer ref={toggleButton}>
             <Button
               onClick={() => {
                 navigate("/edit");

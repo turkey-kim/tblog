@@ -5,6 +5,7 @@ type UserImageSize = "small" | "medium" | "large";
 interface Props {
   onClick?: any;
   size?: UserImageSize;
+  ref?: any;
 }
 
 function UserImage({ onClick, size }: Props) {
