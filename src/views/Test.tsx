@@ -1,4 +1,4 @@
-import Direction from "../components/directon";
+import Direction from "../components/Directon";
 import ToggleMenu from "../components/ToggleMeun";
 
 function Test() {

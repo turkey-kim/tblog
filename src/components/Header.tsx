@@ -4,7 +4,7 @@ import Button from "./Button";
 import { RootState } from "../modules";
 import { useSelector } from "react-redux";
 import UserImage from "./UserImage";
-import Direction from "./directon";
+import Direction from "./Directon";
 import ToggleMenu from "./ToggleMeun";
 import { useState, useRef, useEffect } from "react";
 
@@ -49,9 +49,9 @@ function Header() {
               onClick={() => {
                 navigate("/edit");
               }}
-              text={userProfile?.nickname}
+              text="글쓰기"
               size="medium"
-              color="light"
+              color="dark"
             ></Button>
             <UserImage
               size="small"

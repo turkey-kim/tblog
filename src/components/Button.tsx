@@ -27,13 +27,17 @@ function Button({
 }
 
 const Btn = styled.button<Props>`
-  border: none;
-  border-radius: 3px;
+  margin: 20px;
+  border: 1px solid
+    ${(props) =>
+      props.color === "light"
+        ? props.theme.color.black
+        : props.theme.color.bg50};
+  border-radius: 20px;
   cursor: pointer;
   font-size: ${(props) =>
     props.size === "small" ? "12px" : props.size === "large" ? "16px" : "13px"};
-  font-weight: ${(props) =>
-    props.size === "small" ? "400" : props.size === "large" ? "650" : "500"};
+  font-weight: 700;
   width: ${(props) =>
     props.size === "small"
       ? "50px"
@@ -43,12 +47,27 @@ const Btn = styled.button<Props>`
   height: ${(props) =>
     props.size === "small" ? "35px" : props.size === "large" ? "35px" : "35px"};
   background-color: ${(props) =>
-    props.color === "light"
-      ? props.theme.color.bg100
-      : props.theme.color.dark100};
+    props.color === "light" ? props.theme.color.bg50 : props.theme.color.black};
+  color: ${(props) =>
+    props.color === "light" ? props.theme.color.black : props.theme.color.bg50};
 
   :hover {
-    background-color: ${({ theme }) => theme.color.bg150};
+    transition-duration: 0.2s;
+    background-color: ${(props) =>
+      props.color === "light"
+        ? props.theme.color.black
+        : props.theme.color.bg50};
+
+    color: ${(props) =>
+      props.color === "light"
+        ? props.theme.color.bg50
+        : props.theme.color.black};
+
+    border: 1px solid
+      ${(props) =>
+        props.color === "light"
+          ? props.theme.color.bg50
+          : props.theme.color.black};
   }
 `;
 

@@ -27,7 +27,7 @@ const ImageContainer = styled.div`
 `;
 
 const UserProfile = styled.img<Props>`
-  background-color: ${({ theme }) => theme.color.bg150};
+  background-color: ${({ theme }) => theme.color.bg50};
   border-radius: 50%;
   cursor: pointer;
   width: ${(props) =>
@@ -42,6 +42,11 @@ const UserProfile = styled.img<Props>`
       : props.size === "large"
       ? "150px"
       : "80px"};
+
+  :hover {
+    transition-duration: 0.2s;
+    background-color: ${({ theme }) => theme.color.bg200};
+  }
 `;
 
 export default UserImage;

@@ -13,8 +13,16 @@ interface Props {
 function ToggleMenu({ ref, onClick, display }: Props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const logOut = () => {
+    dispatch(logout());
+    dispatch(clearUserProfile(null));
+    localStorage.removeItem("jwt");
+    navigate("/");
+  };
+
   return (
-    <Container ref={ref} onClick={onClick} display={display}>
+    <MenuContainer ref={ref} onClick={onClick} display={display}>
       <Menu
         onClick={() => {
           navigate("/test");
@@ -29,35 +37,26 @@ function ToggleMenu({ ref, onClick, display }: Props) {
       >
         설정
       </Menu>
-      <Menu
-        onClick={() => {
-          dispatch(logout());
-          dispatch(clearUserProfile(null));
-          localStorage.removeItem("jwt");
-          navigate("/");
-        }}
-      >
-        로그아웃
-      </Menu>
-    </Container>
+      <Menu onClick={logOut}>로그아웃</Menu>
+    </MenuContainer>
   );
 }
 
-const Container = styled.div<Props>`
+const MenuContainer = styled.div<Props>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
   background-color: ${({ theme }) => theme.color.dark200};
-  width: 10%;
-  height: auto;
-  border-radius: 1rem;
+  width: 150px;
+  height: 23vh;
+  border-radius: 0.5rem;
 `;
 
 const Menu = styled.div<Props>`
   cursor: pointer;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   display: flex;
   justify-content: center;
   text-align: center;
@@ -68,7 +67,7 @@ const Menu = styled.div<Props>`
   color: ${({ theme }) => theme.color.white};
 
   :hover {
-    background-color: ${({ theme }) => theme.color.dark150};
+    color: ${({ theme }) => theme.color.green};
   }
 `;
 
