@@ -27,47 +27,88 @@ function Button({
 }
 
 const Btn = styled.button<Props>`
-  margin: 20px;
-  border: 1px solid
-    ${(props) =>
-      props.color === "light"
-        ? props.theme.color.black
-        : props.theme.color.bg50};
-  border-radius: 20px;
   cursor: pointer;
-  font-size: ${(props) =>
-    props.size === "small" ? "12px" : props.size === "large" ? "16px" : "13px"};
+  margin: 20px;
+  border-radius: 20px;
   font-weight: 700;
-  width: ${(props) =>
-    props.size === "small"
-      ? "50px"
-      : props.size === "large"
-      ? "310px"
-      : "75px"};
-  height: ${(props) =>
-    props.size === "small" ? "35px" : props.size === "large" ? "35px" : "35px"};
-  background-color: ${(props) =>
-    props.color === "light" ? props.theme.color.bg50 : props.theme.color.black};
-  color: ${(props) =>
-    props.color === "light" ? props.theme.color.black : props.theme.color.bg50};
+  height: 35px;
+  border: 1px solid
+    ${(props) => {
+      switch (props.color) {
+        case "light":
+          return props.theme.color.black;
+        default:
+          return props.theme.color.bg50;
+      }
+    }};
 
+  font-size: ${(props) => {
+    switch (props.size) {
+      case "small":
+        return "12px";
+      case "large":
+        return "16px";
+      default:
+        return "13px";
+    }
+  }};
+
+  width: ${(props) => {
+    switch (props.size) {
+      case "small":
+        return "50px";
+      case "large":
+        return "310px";
+      default:
+        return "75px";
+    }
+  }};
+
+  background-color: ${(props) => {
+    switch (props.color) {
+      case "light":
+        return props.theme.color.bg50;
+      default:
+        return props.theme.color.black;
+    }
+  }};
+  color: ${(props) => {
+    switch (props.color) {
+      case "light":
+        return props.theme.color.black;
+      default:
+        return props.theme.color.bg50;
+    }
+  }};
   :hover {
     transition-duration: 0.2s;
-    background-color: ${(props) =>
-      props.color === "light"
-        ? props.theme.color.black
-        : props.theme.color.bg50};
+    background-color: ${(props) => {
+      switch (props.color) {
+        case "light":
+          return props.theme.color.black;
+        default:
+          return props.theme.color.bg50;
+      }
+    }};
 
-    color: ${(props) =>
-      props.color === "light"
-        ? props.theme.color.bg50
-        : props.theme.color.black};
+    color: ${(props) => {
+      switch (props.color) {
+        case "light":
+          return props.theme.color.bg50;
+        default:
+          return props.theme.color.black;
+      }
+    }};
 
     border: 1px solid
-      ${(props) =>
-        props.color === "light"
-          ? props.theme.color.bg50
-          : props.theme.color.black};
+      ${(props) => {
+        switch (props.color) {
+          case "light":
+            return props.theme.color.bg50;
+          default:
+            return props.theme.color.black;
+        }
+      }};
   }
 `;
 

@@ -48,10 +48,11 @@ const MenuContainer = styled.div<Props>`
   justify-content: center;
   align-items: center;
   position: absolute;
-  background-color: ${({ theme }) => theme.color.dark200};
+  background-color: ${({ theme }) => theme.color.black};
   width: 150px;
   height: 23vh;
   border-radius: 0.5rem;
+  margin-top: 1px;
 `;
 
 const Menu = styled.div<Props>`
@@ -61,7 +62,7 @@ const Menu = styled.div<Props>`
   justify-content: center;
   text-align: center;
   align-items: center;
-  font-weight: 600;
+  font-weight: 500;
   width: 100%;
   height: 6vh;
   color: ${({ theme }) => theme.color.white};

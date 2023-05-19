@@ -16,7 +16,6 @@ import { useEffect } from "react";
 import useTokenChecker from "./utils/hooks/useTokenChecker";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./modules/isLoggedin";
-import { RootState } from "./modules";
 
 function App() {
   let [isTokenValid, isLoading] = useTokenChecker();
