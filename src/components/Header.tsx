@@ -59,7 +59,14 @@ function Header() {
                 setToggleOn(!toggleOn);
               }}
             ></UserImage>
-            <Direction size="small" direction="down" color="light"></Direction>
+            <Direction
+              size="small"
+              direction="down"
+              color="light"
+              onClick={() => {
+                setToggleOn(!toggleOn);
+              }}
+            ></Direction>
           </AppContainer>
         ) : (
           <AppContainer>

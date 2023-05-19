@@ -10,12 +10,12 @@ interface Props {
   direction?: iconDirection;
   size?: directionSize;
   color?: directionColor;
-  onclick?: any;
+  onClick?: any;
 }
 
-function Direction({ direction, size, color, onclick }: Props) {
+function Direction({ direction, size, color, onClick }: Props) {
   return (
-    <Container onclick={onclick}>
+    <Container onClick={onClick}>
       <Icon direction={direction} size={size} color={color}></Icon>
     </Container>
   );

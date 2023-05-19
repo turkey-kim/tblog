@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Login from "./views/Login";
 import SignUp from "./views/SignUp";
 import Home from "./views/Home";
+import MyPage from "./views/MyPage";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { MyGlobalStyle, myTheme } from "./style";
@@ -14,7 +15,7 @@ import PrivateRoute from "./routes/PrivateRoutes";
 import Private from "./views/Private";
 import { useEffect } from "react";
 import useTokenChecker from "./utils/hooks/useTokenChecker";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login, logout } from "./modules/isLoggedin";
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
             <Route path="/edit" element={<EditPost />} />
             <Route path="/post" element={<Post />} />
             <Route path="/test" element={<Test />} />
+            <Route path="/mypage" element={<MyPage />} />
             <Route
               path="/private"
               element={
