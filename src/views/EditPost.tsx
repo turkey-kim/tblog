@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import MDEditor, { ContextStore } from "@uiw/react-md-editor";
+import Button from "../components/Button";
 
 const EditPost = () => {
   const [markdown, setMarkdown] = useState("");
@@ -25,6 +26,7 @@ const EditPost = () => {
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
+  z-index: 0;
 `;
 
 export default EditPost;

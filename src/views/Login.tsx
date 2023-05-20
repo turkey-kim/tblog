@@ -128,7 +128,7 @@ const LoginField = styled.div`
 `;
 
 const LoginBox = styled.div`
-  background-color: ${({ theme }) => theme.color.dark200};
+  background-color: ${({ theme }) => theme.color.black};
   color: ${({ theme }) => theme.color.white};
   display: flex;
   flex-direction: column;
@@ -153,7 +153,7 @@ const SignIn = styled.button`
   border: none;
   border-radius: 15px 0 0 0;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.color.dark200};
+  background-color: ${({ theme }) => theme.color.black};
   color: ${({ theme }) => theme.color.white};
 `;
 
@@ -163,7 +163,7 @@ const SignUp = styled.button`
   border: none;
   border-radius: 0 15px 0 0;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.color.dark100};
+  background-color: ${({ theme }) => theme.color.dark150};
   color: ${({ theme }) => theme.color.white};
 `;
 
@@ -204,14 +204,17 @@ const SubmitButton = styled.button`
   height: 35px;
   text-decoration: none;
   cursor: pointer;
-  background-color: ${({ theme }) => theme.color.bg200};
+  background-color: ${({ theme }) => theme.color.bg100};
   border: none;
-  border-radius: 2px;
+  border-radius: 10px;
   font-size: medium;
   font-weight: 700;
 
   :hover {
-    background-color: ${({ theme }) => theme.color.bg100};
+    transition-duration: 0.1s;
+    color: ${({ theme }) => theme.color.white};
+    background-color: ${({ theme }) => theme.color.black};
+    border: 1px solid ${({ theme }) => theme.color.white};
   }
 `;
 

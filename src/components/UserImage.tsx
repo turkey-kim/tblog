@@ -38,7 +38,7 @@ const UserProfile = styled.img<Props>`
       case "dark":
         return props.theme.color.bg200;
       default:
-        return props.theme.color.bg100;
+        return props.theme.color.bg150;
     }
   }};
 

@@ -1,15 +1,29 @@
+import { useState } from "react";
 import styled from "styled-components";
 import MDEditor, { ContextStore } from "@uiw/react-md-editor";
+import Button from "../components/Button";
 
-const DUMMY_POST = "### Hello world";
+const EditPost = () => {
+  const [markdown, setMarkdown] = useState("");
 
-const Post = () => {
+  const onChangeValue = (
+    value?: string,
+    event?: React.ChangeEvent<HTMLTextAreaElement>,
+    state?: ContextStore
+  ) => {
+    setMarkdown(value ?? "");
+  };
+
   return (
-    <Container>
-      <MDEditor.Markdown
-        source={DUMMY_POST}
-        style={{ height: "100vh", whiteSpace: "pre-wrap" }}
+    <Container data-color-mode="light">
+      <div className="wmde-markdown-var"></div>
+      <MDEditor
+        value={markdown}
+        onChange={onChangeValue}
+        height={700}
+        fullscreen={true}
       />
+      {/* <MDEditor.Markdown source={markdown} style={{ whiteSpace: "pre-wrap" }} /> */}
     </Container>
   );
 };
@@ -19,4 +33,4 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-export default Post;
+export default EditPost;

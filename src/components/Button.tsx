@@ -5,7 +5,7 @@ type ButtonSize = "small" | "medium" | "large";
 type ButtonColor = "light" | "dark";
 
 interface Props {
-  onClick(): any;
+  onClick?: any;
   type?: string;
   text?: string;
   size?: ButtonSize;
@@ -80,6 +80,7 @@ const Btn = styled.button<Props>`
         return props.theme.color.bg50;
     }
   }};
+
   :hover {
     transition-duration: 0.2s;
     background-color: ${(props) => {

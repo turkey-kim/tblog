@@ -25,7 +25,7 @@ function ToggleMenu({ ref, onClick, display }: Props) {
     <MenuContainer ref={ref} onClick={onClick} display={display}>
       <Menu
         onClick={() => {
-          navigate("/test");
+          navigate("/mypage");
         }}
       >
         마이페이지
@@ -43,11 +43,11 @@ function ToggleMenu({ ref, onClick, display }: Props) {
 }
 
 const MenuContainer = styled.div<Props>`
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
   background-color: ${({ theme }) => theme.color.black};
   width: 150px;
   height: 23vh;
