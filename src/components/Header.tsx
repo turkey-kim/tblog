@@ -4,8 +4,8 @@ import Button from "./Button";
 import { RootState } from "../modules";
 import { useSelector } from "react-redux";
 import UserImage from "./UserImage";
-import Direction from "./Directon";
 import ToggleMenu from "./ToggleMeun";
+import Direction from "./Directon";
 import { useState, useRef, useEffect } from "react";
 
 function Header() {
@@ -37,8 +37,6 @@ function Header() {
     (state: RootState) => state.isLoggedIn.isLoggedIn
   );
 
-  const userProfile = useSelector((state: RootState) => state.userProfile);
-
   return (
     <div>
       <HeaderBox>
@@ -47,7 +45,7 @@ function Header() {
           <AppContainer ref={toggleButton}>
             <Button
               onClick={() => {
-                navigate("/edit");
+                navigate("/post");
               }}
               text="글쓰기"
               size="medium"

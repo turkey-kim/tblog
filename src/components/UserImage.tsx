@@ -44,18 +44,27 @@ const UserProfile = styled.img<Props>`
 
   border-radius: 50%;
   cursor: pointer;
-  width: ${(props) =>
-    props.size === "small"
-      ? "40px"
-      : props.size === "large"
-      ? "150px"
-      : "80px"};
-  height: ${(props) =>
-    props.size === "small"
-      ? "40px"
-      : props.size === "large"
-      ? "150px"
-      : "80px"};
+  width: ${(props) => {
+    switch (props.size) {
+      case "small":
+        return "40px";
+      case "large":
+        return "150px";
+      default:
+        return "80px";
+    }
+  }};
+
+  height: ${(props) => {
+    switch (props.size) {
+      case "small":
+        return "40px";
+      case "large":
+        return "150px";
+      default:
+        return "80px";
+    }
+  }};
 
   :hover {
     transition-duration: 0.2s;
