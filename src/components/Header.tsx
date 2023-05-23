@@ -6,7 +6,8 @@ import { useSelector } from "react-redux";
 import UserImage from "./UserImage";
 import ToggleMenu from "./ToggleMeun";
 import Direction from "./Directon";
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
+import useMousedown from "../utils/hooks/useMousedown";
 
 function Header() {
   const navigate = useNavigate();
@@ -14,24 +15,9 @@ function Header() {
     navigate("/");
   };
 
-  const toggleRef = useRef<HTMLDivElement>(null);
-  const toggleButton = useRef<HTMLDivElement>(null);
-  let [toggleOn, setToggleOn] = useState(false);
-
-  useEffect(() => {
-    document.addEventListener("mousedown", toggleOutSideClick);
-    return () => {
-      document.removeEventListener("mousedown", toggleOutSideClick);
-    };
-  });
-
-  const toggleOutSideClick = (e: any) => {
-    if (toggleButton.current?.contains(e.target)) {
-      return;
-    } else if (toggleOn && !toggleRef.current?.contains(e.target)) {
-      setToggleOn(false);
-    }
-  };
+  const targetRef = useRef<HTMLDivElement>(null);
+  const exept = useRef<HTMLDivElement>(null);
+  const [targetOn, onClick] = useMousedown(targetRef, exept);
 
   const isLoggedIn = useSelector(
     (state: RootState) => state.isLoggedIn.isLoggedIn
@@ -42,7 +28,7 @@ function Header() {
       <HeaderBox>
         <Title onClick={main}>Tblog</Title>
         {isLoggedIn ? (
-          <AppContainer ref={toggleButton}>
+          <AppContainer>
             <Button
               onClick={() => {
                 navigate("/post");
@@ -51,20 +37,14 @@ function Header() {
               size="medium"
               color="dark"
             ></Button>
-            <UserImage
-              size="small"
-              onClick={() => {
-                setToggleOn(!toggleOn);
-              }}
-            ></UserImage>
-            <Direction
-              size="small"
-              direction="down"
-              color="light"
-              onClick={() => {
-                setToggleOn(!toggleOn);
-              }}
-            ></Direction>
+            <ProfileCotainer ref={exept} onClick={onClick}>
+              <UserImage size="small"></UserImage>
+              <Direction
+                size="small"
+                direction="down"
+                color="light"
+              ></Direction>
+            </ProfileCotainer>
           </AppContainer>
         ) : (
           <AppContainer>
@@ -79,14 +59,8 @@ function Header() {
           </AppContainer>
         )}
       </HeaderBox>
-      <ToggleContainer ref={toggleRef}>
-        {toggleOn ? (
-          <ToggleMenu
-            onClick={() => {
-              setToggleOn(false);
-            }}
-          ></ToggleMenu>
-        ) : null}
+      <ToggleContainer ref={targetRef}>
+        {targetOn ? <ToggleMenu onClick={onClick}></ToggleMenu> : null}
       </ToggleContainer>
     </div>
   );
@@ -115,6 +89,15 @@ const AppContainer = styled.div`
   display: flex;
   justify-content: right;
   width: 50%;
+`;
+
+interface Props {
+  onClick?: any;
+}
+const ProfileCotainer = styled.div<Props>`
+  display: flex;
+  justify-content: right;
+  width: auto;
 `;
 
 const ToggleContainer = styled.div`

@@ -1,10 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import styled from "styled-components";
 import MDEditor, { ContextStore } from "@uiw/react-md-editor";
 import Button from "../components/Button";
+import useMousedown from "../utils/hooks/useMousedown";
 
 const EditPost = () => {
   const [markdown, setMarkdown] = useState("");
+  const targetRef = useRef<HTMLDivElement>(null);
+  const [targetOn, onClick, clicked] = useMousedown(targetRef);
 
   const onChangeValue = (
     value?: string,
@@ -14,40 +17,18 @@ const EditPost = () => {
     setMarkdown(value ?? "");
   };
 
-  const [headerClick, setHeaderClick] = useState(false);
-  const container = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    document.addEventListener("mousedown", containerOutSideClick);
-    return () => {
-      document.removeEventListener("mousedown", containerOutSideClick);
-    };
-  });
-
-  const containerOutSideClick = (e: any) => {
-    if (!container.current?.contains(e.target)) {
-      setHeaderClick(true);
-    }
-  };
-
   return (
-    <Container
-      data-color-mode="light"
-      ref={container}
-      onClick={() => {
-        setHeaderClick(false);
-      }}
-    >
+    <Container data-color-mode="light" ref={targetRef} onClick={() => clicked}>
       <div className="wmde-markdown-var"></div>
-      {headerClick ? (
+      {targetOn ? (
+        <MDEditor value={markdown} onChange={onChangeValue} height={700} />
+      ) : (
         <MDEditor
           value={markdown}
           onChange={onChangeValue}
           height={700}
           style={{ zIndex: -1 }}
         />
-      ) : (
-        <MDEditor value={markdown} onChange={onChangeValue} height={700} />
       )}
       <Button text="발행"></Button>
       {/* <MDEditor.Markdown source={markdown} style={{ whiteSpace: "pre-wrap" }} /> */}
