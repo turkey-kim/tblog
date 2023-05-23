@@ -5,6 +5,7 @@ function Test() {
   return (
     <>
       <p>This is test page</p>
+      <p>커밋테스트</p>
       <Direction color="dark"></Direction>
       <ToggleMenu></ToggleMenu>
     </>
