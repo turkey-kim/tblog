@@ -7,7 +7,7 @@ import useMousedown from "../utils/hooks/useMousedown";
 const EditPost = () => {
   const [markdown, setMarkdown] = useState("");
   const targetRef = useRef<HTMLDivElement>(null);
-  const [targetOn, onClick, clicked] = useMousedown(targetRef);
+  const [targetOn] = useMousedown(targetRef);
 
   const onChangeValue = (
     value?: string,
@@ -18,7 +18,7 @@ const EditPost = () => {
   };
 
   return (
-    <Container data-color-mode="light" ref={targetRef} onClick={() => clicked}>
+    <Container data-color-mode="light" ref={targetRef}>
       <div className="wmde-markdown-var"></div>
       {targetOn ? (
         <MDEditor value={markdown} onChange={onChangeValue} height={700} />

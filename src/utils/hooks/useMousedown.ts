@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 
+// 타킷 액티브 관리; 클릭 시 타깃 활성화, 논타깃 클릭 시 비활성화
+// 예외사항 지정 가능.
+
 function useMousedown(
   target: React.RefObject<HTMLDivElement>,
   exept?: React.RefObject<HTMLDivElement>
