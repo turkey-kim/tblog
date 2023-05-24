@@ -23,6 +23,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //자동로그아웃
     if (isLoading) {
     } else if (isTokenValid) {
       dispatch(login());
