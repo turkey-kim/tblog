@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import getPosts from "../api/getPosts";
+import getWritings from "../api/getWritings";
 import styled from "styled-components";
 
 function Test() {
@@ -7,7 +7,7 @@ function Test() {
 
   useEffect(() => {
     async function posts() {
-      const result = await getPosts("api/get_posts");
+      const result = await getWritings("api/get_writings");
       // console.log(result?.data);
       setArr(result?.data);
     }
