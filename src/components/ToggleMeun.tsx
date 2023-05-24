@@ -35,6 +35,13 @@ function ToggleMenu({ ref, onClick, display }: Props) {
           navigate("/test");
         }}
       >
+        임시글
+      </Menu>
+      <Menu
+        onClick={() => {
+          navigate("/test");
+        }}
+      >
         설정
       </Menu>
       <Menu onClick={logOut}>로그아웃</Menu>
