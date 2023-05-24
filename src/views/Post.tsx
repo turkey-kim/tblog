@@ -3,11 +3,14 @@ import styled from "styled-components";
 import MDEditor, { ContextStore } from "@uiw/react-md-editor";
 import Button from "../components/Button";
 import useMousedown from "../utils/hooks/useMousedown";
+import postWriting from "../api/postWriting";
+import { useNavigate } from "react-router-dom";
 
 const EditPost = () => {
   const [markdown, setMarkdown] = useState("");
   const targetRef = useRef<HTMLDivElement>(null);
   const [targetOn] = useMousedown(targetRef);
+  const navigate = useNavigate();
 
   const onChangeValue = (
     value?: string,
@@ -15,6 +18,11 @@ const EditPost = () => {
     state?: ContextStore
   ) => {
     setMarkdown(value ?? "");
+  };
+
+  const post = () => {
+    postWriting("title", "author1", markdown, "2023-05-25", "tujee");
+    navigate("/test");
   };
 
   return (
@@ -37,7 +45,7 @@ const EditPost = () => {
         />
       )}
       <ButtonContainer>
-        <Button text="발행" size="medium"></Button>
+        <Button text="발행" size="medium" onClick={post}></Button>
       </ButtonContainer>
       {/* <MDEditor.Markdown source={markdown} style={{ whiteSpace: "pre-wrap" }} /> */}
     </Container>
