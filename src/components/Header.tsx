@@ -23,6 +23,8 @@ function Header() {
     (state: RootState) => state.isLoggedIn.isLoggedIn
   );
 
+  if (window.location.pathname === "/post") return null;
+
   return (
     <div>
       <HeaderBox>
