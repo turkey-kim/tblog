@@ -11,6 +11,7 @@ import { ThemeProvider } from "styled-components";
 import EditPost from "./views/EditPost";
 import Post from "./views/Post";
 import Test from "./views/Test";
+import Writing from "./views/Writing";
 import PrivateRoute from "./routes/PrivateRoutes";
 import Private from "./views/Private";
 import { useEffect } from "react";
@@ -46,6 +47,7 @@ function App() {
             <Route path="/post" element={<Post />} />
             <Route path="/test" element={<Test />} />
             <Route path="/mypage" element={<MyPage />} />
+            <Route path="/writings/:id" element={<Writing />} />
             <Route
               path="/private"
               element={
