@@ -11,7 +11,7 @@ function useInput(initialText: TextValues) {
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
-      setText((text) => ({ ...text, [name]: value }));
+      setText((text) => ({ ...text, [name]: value })); // []의 의미는 name이 동적으로 할당되기 때문.
     },
     [text]
   );
