@@ -3,10 +3,10 @@ import { SERVER_API_ADDRESS } from "../constants/link";
 
 function postWriting(
   title: string,
-  author: string,
+  author: string | undefined,
   content: string | null,
   date: string,
-  auth: string
+  auth: string | undefined
 ) {
   return axios
     .post(

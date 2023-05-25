@@ -6,14 +6,20 @@ import useMousedown from "../utils/hooks/useMousedown";
 import postWriting from "../api/postWriting";
 import useInput from "../utils/hooks/useInput";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../modules";
 
-const EditPost = () => {
+const Post = () => {
   const [markdown, setMarkdown] = useState("");
-  let [text, setText] = useInput({ title: "", str: "" });
+  let [text, setText] = useInput({ title: "" });
   let { title } = text;
+
+  const user = useSelector((state: RootState) => state.userProfile);
+
   const targetRef = useRef<HTMLDivElement>(null);
   const [targetOn] = useMousedown(targetRef);
   const navigate = useNavigate();
+
   const onChangeValue = (
     value?: string,
     event?: React.ChangeEvent<HTMLTextAreaElement>,
@@ -23,7 +29,14 @@ const EditPost = () => {
   };
 
   const post = () => {
-    postWriting(title, "author1", markdown, "2023-05-25", "tujee");
+    const date = new Date();
+    postWriting(
+      title,
+      user?.nickname,
+      markdown,
+      date.toLocaleDateString(),
+      user?.id
+    );
     navigate("/test");
   };
 
@@ -87,4 +100,4 @@ const ButtonContainer = styled.div`
   right: 20px;
 `;
 
-export default EditPost;
+export default Post;
