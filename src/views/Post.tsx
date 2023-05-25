@@ -4,14 +4,16 @@ import MDEditor, { ContextStore } from "@uiw/react-md-editor";
 import Button from "../components/Button";
 import useMousedown from "../utils/hooks/useMousedown";
 import postWriting from "../api/postWriting";
+import useInput from "../utils/hooks/useInput";
 import { useNavigate } from "react-router-dom";
 
 const EditPost = () => {
   const [markdown, setMarkdown] = useState("");
+  let [text, setText] = useInput({ title: "", str: "" });
+  let { title } = text;
   const targetRef = useRef<HTMLDivElement>(null);
   const [targetOn] = useMousedown(targetRef);
   const navigate = useNavigate();
-
   const onChangeValue = (
     value?: string,
     event?: React.ChangeEvent<HTMLTextAreaElement>,
@@ -21,13 +23,18 @@ const EditPost = () => {
   };
 
   const post = () => {
-    postWriting("title", "author1", markdown, "2023-05-25", "tujee");
+    postWriting(title, "author1", markdown, "2023-05-25", "tujee");
     navigate("/test");
   };
 
   return (
     <Container data-color-mode="light" ref={targetRef}>
-      <Title placeholder="발행하실 글의 제목을 입력하세요"></Title>
+      <Title
+        name="title"
+        placeholder="발행하실 글의 제목을 입력하세요"
+        value={title}
+        onChange={setText}
+      ></Title>
       <div className="wmde-markdown-var"></div>
       {targetOn ? (
         <MDEditor
@@ -79,4 +86,5 @@ const ButtonContainer = styled.div`
   bottom: 15px;
   right: 20px;
 `;
+
 export default EditPost;
