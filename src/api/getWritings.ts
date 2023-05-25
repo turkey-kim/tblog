@@ -1,7 +1,7 @@
 import { SERVER_API_ADDRESS } from "../constants/link";
 import axios from "axios";
 
-function getPosts(apiEndPoint?: string | null) {
+function getWritings(apiEndPoint?: string | null) {
   return axios
     .get(`${SERVER_API_ADDRESS}/${apiEndPoint}`, {
       withCredentials: true,
@@ -11,4 +11,4 @@ function getPosts(apiEndPoint?: string | null) {
     });
 }
 
-export default getPosts;
+export default getWritings;
