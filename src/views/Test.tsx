@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import getWritings from "../api/getWritings";
 import styled from "styled-components";
+import Button from "../components/Button";
 
 function Test() {
   let [arr, setArr] = useState<any>([{}]);
@@ -18,6 +19,7 @@ function Test() {
   return (
     <Container>
       <p>테스트페이지</p>
+      <Button text="test" color="light"></Button>
       <CardDeque>
         {arr.length != 0
           ? arr.map((element: any) => (
@@ -26,6 +28,7 @@ function Test() {
                 <h2>cotent</h2>
                 <p>{element.content}</p>
                 <p>author : {element.author}</p>
+                <p>{element.date}</p>
               </Card>
             ))
           : null}
