@@ -47,7 +47,7 @@ function App() {
             <Route path="/post" element={<Post />} />
             <Route path="/test" element={<Test />} />
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/writings/:id" element={<Writing />} />
+            <Route path="/writing/:id" element={<Writing />} />
             <Route
               path="/private"
               element={
