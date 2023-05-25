@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import getWritings from "../api/getWritings";
 import styled from "styled-components";
 import Button from "../components/Button";
 
 function Test() {
   let [arr, setArr] = useState<any>([{}]);
+  let navigate = useNavigate();
 
   useEffect(() => {
     async function posts() {
@@ -20,10 +22,19 @@ function Test() {
     <Container>
       <p>테스트페이지</p>
       <Button text="test" color="light"></Button>
+      <Button text="test2" color="dark"></Button>
+      <Button text="test2" color="dark" size="small"></Button>
+      <Button text="test2" color="dark" size="large"></Button>
+      <Button text="test2" color="light" size="small"></Button>
+      <Button text="test2" color="light" size="large"></Button>
       <CardDeque>
         {arr.length != 0
           ? arr.map((element: any) => (
-              <Card>
+              <Card
+                onClick={() => {
+                  navigate("/writings/4018");
+                }}
+              >
                 <h1>{element.title}</h1>
                 <h2>cotent</h2>
                 <p>{element.content}</p>
@@ -50,7 +61,11 @@ const CardDeque = styled.div`
   justify-content: center;
 `;
 
-const Card = styled.div`
+interface Props {
+  onClick?: any;
+}
+
+const Card = styled.div<Props>`
   display: flex;
   flex-direction: column;
   margin: 15px;
@@ -58,6 +73,7 @@ const Card = styled.div`
   height: 400px;
   background-color: ${({ theme }) => theme.color.white};
   border-radius: 5px;
+  cursor: pointer;
 
   :last-child {
     justify-self: flex-end;
