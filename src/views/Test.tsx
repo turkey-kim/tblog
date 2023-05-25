@@ -32,7 +32,7 @@ function Test() {
           ? arr.map((element: any) => (
               <Card
                 onClick={() => {
-                  navigate("/writings/4018");
+                  navigate(`/writing/${element.id}`);
                 }}
               >
                 <h1>{element.title}</h1>

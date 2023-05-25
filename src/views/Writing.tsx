@@ -1,24 +1,34 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import Button from "../components/Button";
+import getOneWriting from "../api/getOneWriting";
+import { useEffect, useState } from "react";
 
 function Writing() {
   let { id } = useParams();
 
-  let test = () => {
-    console.log(id);
-  };
+  let [writing, setWriting] = useState<any>({});
+
+  useEffect(() => {
+    const apiEndPoint = "api/get_one_writing";
+    async function fetch() {
+      const result = await getOneWriting(id, apiEndPoint);
+      setWriting(result?.data);
+    }
+
+    fetch();
+  }, []);
+
   return (
     <Container>
       <WritingHeader>
-        <Title>제목이올시다</Title>
-        <Date>저는유 날짜이여유~</Date>
-        <Author>내가 저자이올시다</Author>
+        <Title>{writing.title}</Title>
+        <Date>{writing.date}</Date>
+        <Author>{writing.author}</Author>
       </WritingHeader>
       <h1>Test</h1>
+      <p>{writing.content}</p>
       <br />
       <br />
-      <Button onClick={test} text="test"></Button>
       <p>현재 페이지의 파라미터는 {id} 입니다.</p>
     </Container>
   );
