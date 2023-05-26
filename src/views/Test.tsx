@@ -15,7 +15,6 @@ function Test() {
       setArr(result?.data);
     }
     posts();
-    console.log(arr);
   }, []);
 
   return (
