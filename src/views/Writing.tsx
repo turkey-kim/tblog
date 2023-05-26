@@ -2,6 +2,11 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import getOneWriting from "../api/getOneWriting";
 import { useEffect, useState } from "react";
+import {
+  PluggableList,
+  ReactMarkdown,
+} from "react-markdown/lib/react-markdown";
+import remarkGfm from "remark-gfm";
 
 function Writing() {
   let { id } = useParams();
@@ -25,8 +30,9 @@ function Writing() {
         <Date>{writing.date}</Date>
         <Author>{writing.author}</Author>
       </WritingHeader>
-      <h1>Test</h1>
-      <p>{writing.content}</p>
+      <ReactMarkdown remarkPlugins={[remarkGfm] as PluggableList}>
+        {writing.content}
+      </ReactMarkdown>
       <br />
       <br />
       <p>현재 페이지의 파라미터는 {id} 입니다.</p>
