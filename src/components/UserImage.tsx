@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import ProfileImage from "../assets/icons/userProfile.png";
 type UserImageSize = "small" | "medium" | "large";
 type UserImageColor = "light" | "medium" | "dark";
 
@@ -14,7 +14,6 @@ function UserImage({ onClick, size, color, hover }: Props) {
   return (
     <ImageContainer>
       <UserProfile
-        src="icon/userProfile.png"
         size={size}
         onClick={onClick}
         color={color}
@@ -65,6 +64,8 @@ const UserProfile = styled.img<Props>`
         return "80px";
     }
   }};
+
+  content: url(${ProfileImage});
 
   :hover {
     transition-duration: 0.2s;
