@@ -1,17 +1,23 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import getOneWriting from "../api/getOneWriting";
+import deleteWriting from "../api/deleteWriting";
 import { useEffect, useState } from "react";
-import {
-  PluggableList,
-  ReactMarkdown,
-} from "react-markdown/lib/react-markdown";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { useSelector } from "react-redux";
+import { RootState } from "../modules";
+import { useNavigate } from "react-router-dom";
 import remarkGfm from "remark-gfm";
+import Button from "../components/Button";
 
 function Writing() {
   let { id } = useParams();
 
   let [writing, setWriting] = useState<any>({});
+
+  const navigate = useNavigate();
+
+  const user = useSelector((state: RootState) => state.userProfile);
 
   useEffect(() => {
     const apiEndPoint = "api/get_one_writing";
@@ -23,6 +29,13 @@ function Writing() {
     fetch();
   }, []);
 
+  function deleteThis() {
+    let apiEndPoint = "api/delete_writing";
+    deleteWriting(apiEndPoint, writing.id);
+    alert("삭제되었습니다!");
+    navigate(-1);
+  }
+
   return (
     <Container>
       <WritingHeader>
@@ -30,7 +43,23 @@ function Writing() {
         <Date>{writing.date}</Date>
         <Author>by .{writing.author}</Author>
       </WritingHeader>
-      <p>현재 페이지의 파라미터는 {id} 입니다.</p>
+      {user?.id == writing.auth ? (
+        <AuthorMenu>
+          <Button
+            size="small"
+            color="light"
+            text="수정"
+            margin="auto 10px auto auto"
+          ></Button>
+          <Button
+            size="small"
+            color="light"
+            text="삭제"
+            margin="none"
+            onClick={deleteThis}
+          ></Button>
+        </AuthorMenu>
+      ) : null}
       <Content>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {writing.content}
@@ -76,9 +105,8 @@ const Date = styled.div`
   display: flex;
   justify-content: right;
   align-items: center;
-  font-size: large;
-  font-weight: 700;
-  /* background-color: lightGreen; */
+  font-size: small;
+  color: ${({ theme }) => theme.color.bg250};
 `;
 
 const Author = styled.div`
@@ -90,6 +118,19 @@ const Author = styled.div`
   font-size: large;
   font-weight: 700;
   /* background-color: red; */
+`;
+
+const AuthorMenu = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  & > button {
+    :first-child {
+      margin-left: 150px;
+    }
+  }
 `;
 
 const Content = styled.div`
