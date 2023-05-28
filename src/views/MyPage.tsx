@@ -3,38 +3,52 @@ import UserImage from "../components/UserImage";
 import { RootState } from "../modules";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import getMyWriting from "../api/getMyWritings";
+import WritingImage from "../components/Writing";
+import { useNavigate } from "react-router-dom";
 
 function MyPage() {
-  const nickname = useSelector(
-    (state: RootState) => state.userProfile?.nickname
-  );
-
-  const [arr, setArr] = useState<string[]>([]);
+  const user = useSelector((state: RootState) => state.userProfile);
+  const [arr, setArr] = useState<any>([{}]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    let x: any = localStorage.getItem("contents");
-    if (x) {
-      x = JSON.parse(x);
-      setArr(x);
+    async function fetch() {
+      try {
+        let apiEndPoint = "api/get_my_writing";
+        const result = await getMyWriting(user?.id, apiEndPoint);
+        setArr(result?.data);
+      } catch (err) {
+        console.error(err);
+      }
     }
+    fetch();
   }, []);
 
   return (
     <Container>
       <Profile>
         <UserImage size="large" hover="none"></UserImage>
-        <UserName>{nickname}</UserName>
+        <UserName>{user?.nickname}</UserName>
       </Profile>
       <Text>나의 포스트</Text>
       <Contents>
-        {arr.map((text, i) => {
-          return (
-            <Card>
-              <h1>{i + 1}</h1>
-              <p>{text}</p>
-            </Card>
-          );
-        })}
+        {arr.length != 0
+          ? arr.map((element: any) => (
+              <Card
+                onClick={() => {
+                  navigate(`/writing/${element.id}`);
+                }}
+              >
+                <WritingImage></WritingImage>
+                <CardTitle>{element.title}</CardTitle>
+                <CardFooter>
+                  <CardDate>{element.date}</CardDate>
+                  <Author>by {element.author}</Author>
+                </CardFooter>
+              </Card>
+            ))
+          : null}
       </Contents>
     </Container>
   );
@@ -98,6 +112,41 @@ const Card = styled.div`
   :last-child {
     justify-self: flex-end;
   }
+`;
+
+const CardTitle = styled.div`
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.5rem;
+  width: 100%;
+  height: 20%;
+  padding-top: 10px;
+`;
+
+const CardFooter = styled.div`
+  display: flex;
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+`;
+
+const CardDate = styled.div`
+  text-align: right;
+  font-size: 0.75rem;
+  width: 100%;
+  height: auto;
+  color: ${({ theme }) => theme.color.dark100};
+  margin-bottom: 0.5rem;
+`;
+
+const Author = styled.div`
+  text-align: left;
+  font-weight: 800;
+  font-size: 1rem;
+  width: 100%;
+  height: auto;
+  border-top: 1px solid ${({ theme }) => theme.color.bg100};
+  padding: 0.75rem;
 `;
 
 export default MyPage;
