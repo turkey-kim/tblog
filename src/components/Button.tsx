@@ -6,7 +6,7 @@ type ButtonColor = "light" | "dark";
 
 interface Props {
   onClick?: any;
-  type?: string;
+  margin?: string;
   text?: string;
   size?: ButtonSize;
   color?: ButtonColor;
@@ -14,13 +14,13 @@ interface Props {
 
 function Button({
   onClick,
-  type,
+  margin,
   text,
   size,
   color,
 }: Props): React.ReactElement {
   return (
-    <Btn onClick={onClick} size={size} color={color}>
+    <Btn onClick={onClick} size={size} color={color} margin={margin}>
       {text}
     </Btn>
   );
@@ -28,7 +28,7 @@ function Button({
 
 const Btn = styled.button<Props>`
   cursor: pointer;
-  margin: 20px;
+  margin: ${(props) => (props.margin ? props.margin : "auto 15px auto 15px")};
   border-radius: 20px;
   font-weight: 700;
   height: 35px;
