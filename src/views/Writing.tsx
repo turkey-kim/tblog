@@ -29,6 +29,10 @@ function Writing() {
     fetch();
   }, []);
 
+  function editThis() {
+    navigate(`/edit/${writing.id}`);
+  }
+
   function deleteThis() {
     let apiEndPoint = "api/delete_writing";
     deleteWriting(apiEndPoint, writing.id);
@@ -50,6 +54,7 @@ function Writing() {
             color="light"
             text="수정"
             margin="auto 10px auto auto"
+            onClick={editThis}
           ></Button>
           <Button
             size="small"

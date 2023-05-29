@@ -24,6 +24,7 @@ function Header() {
   );
 
   if (window.location.pathname === "/post") return null;
+  if (window.location.pathname.startsWith("/edit/")) return null;
 
   return (
     <div>
