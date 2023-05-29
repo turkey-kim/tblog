@@ -4,29 +4,26 @@ import MDEditor, { ContextStore } from "@uiw/react-md-editor";
 import Button from "../components/Button";
 import useMousedown from "../utils/hooks/useMousedown";
 import editWriting from "../api/editWriting";
-import useInput from "../utils/hooks/useInput";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules";
 import { useParams } from "react-router-dom";
 import getOneWriting from "../api/getOneWriting";
 
-const Post = () => {
-  // 수정할 제목 렌더링이 안됌. 추후 수정
-
+const EditPost = () => {
   useEffect(() => {
     const apiEndPoint = "api/get_one_writing";
     async function fetch() {
       const result = await getOneWriting(id, apiEndPoint);
       setMarkdown(result?.data.content);
+      setTitle(result?.data.title);
     }
     fetch();
   }, []);
 
   let { id } = useParams();
   const [markdown, setMarkdown] = useState("");
-  let [text, setText] = useInput({ title: "" });
-  let { title } = text;
+  let [title, setTitle] = useState("");
 
   const user = useSelector((state: RootState) => state.userProfile);
 
@@ -55,13 +52,17 @@ const Post = () => {
     navigate("/test");
   };
 
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
   return (
     <Container data-color-mode="light" ref={targetRef}>
       <Title
         name="title"
         placeholder="수정하실 글의 제목을 입력하세요"
         value={title}
-        onChange={setText}
+        onChange={onChange}
       ></Title>
       <div className="wmde-markdown-var"></div>
       {targetOn ? (
@@ -115,4 +116,4 @@ const ButtonContainer = styled.div`
   right: 20px;
 `;
 
-export default Post;
+export default EditPost;
