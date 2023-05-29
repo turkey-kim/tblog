@@ -43,16 +43,15 @@ function App() {
             <Route path="/" element={<Home></Home>} />
             <Route path="/login" element={<Login></Login>} />
             <Route path="/sign_up" element={<SignUp></SignUp>} />
-            <Route path="/edit" element={<EditPost />} />
             <Route path="/post" element={<Post />} />
             <Route path="/test" element={<Test />} />
-            <Route path="/mypage" element={<MyPage />} />
             <Route path="/writing/:id" element={<Writing />} />
+            <Route path="/edit/:id" element={<EditPost />} />
             <Route
-              path="/private"
+              path="/mypage"
               element={
                 <PrivateRoute>
-                  <Private></Private>
+                  <MyPage></MyPage>
                 </PrivateRoute>
               }
             />
