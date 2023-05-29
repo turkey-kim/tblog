@@ -13,10 +13,15 @@ import getOneWriting from "../api/getOneWriting";
 const EditPost = () => {
   useEffect(() => {
     const apiEndPoint = "api/get_one_writing";
+
     async function fetch() {
       const result = await getOneWriting(id, apiEndPoint);
       setMarkdown(result?.data.content);
       setTitle(result?.data.title);
+
+      if (user?.id != result?.data.author) {
+        navigate("/");
+      }
     }
     fetch();
   }, []);
