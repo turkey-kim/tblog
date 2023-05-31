@@ -31,7 +31,7 @@ const Btn = styled.button<Props>`
   margin: ${(props) => (props.margin ? props.margin : "auto 15px auto 15px")};
   border-radius: 20px;
   font-weight: 700;
-  height: 35px;
+  height: ${(props) => (props.size == "large" ? "45px" : "35px")};
   border: 1px solid
     ${(props) => {
       switch (props.color) {
@@ -58,7 +58,7 @@ const Btn = styled.button<Props>`
       case "small":
         return "50px";
       case "large":
-        return "310px";
+        return "250px";
       default:
         return "75px";
     }
