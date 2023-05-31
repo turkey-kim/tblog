@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import getWritings from "../api/getWritings";
 import React, { useState, useEffect } from "react";
-import WritingImage from "../components/Writing";
+import WritingImage from "../components/WritingImage";
 
 function Home() {
   let [arr, setArr] = useState<any>([{}]);

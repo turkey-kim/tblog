@@ -4,7 +4,7 @@ import { RootState } from "../modules";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import getMyWriting from "../api/getMyWritings";
-import WritingImage from "../components/Writing";
+import WritingImage from "../components/WritingImage";
 import { useNavigate } from "react-router-dom";
 
 function MyPage() {

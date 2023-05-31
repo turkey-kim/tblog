@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import image from "../assets/icons/writing.jpg";
-import { JsxElement } from "typescript";
+import image from "../assets/images/writing.jpg";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 
 function writingImage(): ReactElement {

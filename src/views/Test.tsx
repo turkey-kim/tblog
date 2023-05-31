@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import getWritings from "../api/getWritings";
 import styled from "styled-components";
 import Button from "../components/Button";
-import WritingImage from "../components/Writing";
+import WritingImage from "../components/WritingImage";
 
 function Test() {
   let [arr, setArr] = useState<any>([{}]);
