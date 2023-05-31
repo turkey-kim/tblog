@@ -6,6 +6,7 @@ import sendUserInfo from "../api/sendUserInfo";
 import { useDispatch } from "react-redux";
 import { login } from "../modules/isLoggedin";
 import { setUserProfile } from "../modules/userProfile";
+import TblogIcon from "../assets/icons/main.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ function Login() {
     <>
       <EntireField>
         <TextField>
+          <Icon></Icon>
           <h1>Welcome to Tblog!</h1>
           <h3>Sign in & Enjoy our service as you want</h3>
           <p>We provide writing service and you can write whatever you want</p>
@@ -103,7 +105,7 @@ const EntireField = styled.div`
 const TextField = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin-right: 200px;
 
@@ -216,6 +218,13 @@ const SubmitButton = styled.button`
     background-color: ${({ theme }) => theme.color.black};
     border: 1px solid ${({ theme }) => theme.color.white};
   }
+`;
+
+const Icon = styled.image`
+  width: 200px;
+  height: auto;
+  margin-bottom: 10px;
+  content: url(${TblogIcon});
 `;
 
 export default Login;
