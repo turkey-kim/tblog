@@ -13,7 +13,7 @@ import Post from "./views/Post";
 import Test from "./views/Test";
 import Writing from "./views/Writing";
 import PrivateRoute from "./routes/PrivateRoutes";
-import Private from "./views/Private";
+import NotFound from "./views/NotFound";
 import { useEffect } from "react";
 import useTokenChecker from "./utils/hooks/useTokenChecker";
 import { useDispatch } from "react-redux";
@@ -45,6 +45,8 @@ function App() {
             <Route path="/sign_up" element={<SignUp></SignUp>} />
             <Route path="/writing/:id" element={<Writing></Writing>} />
             <Route path="/test" element={<Test />} />
+            <Route path="/*" element={<NotFound></NotFound>} />
+
             <Route
               path="/mypage"
               element={
