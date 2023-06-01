@@ -19,7 +19,7 @@ const EditPost = () => {
       setMarkdown(result?.data.content);
       setTitle(result?.data.title);
 
-      if (user?.id != result?.data.author) {
+      if (user?.id != result?.data.auth) {
         navigate("/");
       }
     }
