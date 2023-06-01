@@ -9,6 +9,7 @@ import { RootState } from "../modules";
 import { useNavigate } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import Button from "../components/Button";
+import { Blockquote, Code } from "../assets/markdown/components";
 
 function Writing() {
   let { id } = useParams();
@@ -66,7 +67,13 @@ function Writing() {
         </AuthorMenu>
       ) : null}
       <Content>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown
+          components={{
+            blockquote: Blockquote,
+            code: Code,
+          }}
+          remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+        >
           {writing.content}
         </ReactMarkdown>
       </Content>
