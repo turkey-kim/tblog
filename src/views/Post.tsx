@@ -8,6 +8,7 @@ import useInput from "../utils/hooks/useInput";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules";
+import { FileDrop } from "react-file-drop";
 
 const Post = () => {
   const [markdown, setMarkdown] = useState("");
@@ -49,21 +50,36 @@ const Post = () => {
         onChange={setText}
       ></Title>
       <div className="wmde-markdown-var"></div>
-      {targetOn ? (
-        <MDEditor
-          value={markdown}
-          onChange={onChangeValue}
-          height={1000}
-          style={{ width: "100%" }}
-        />
-      ) : (
-        <MDEditor
-          value={markdown}
-          onChange={onChangeValue}
-          height={1000}
-          style={{ width: "100%", zIndex: -1 }}
-        />
-      )}
+      <FileDrop
+        onDrop={(files, event) => {
+          if (files != null) {
+            const formData = new FormData();
+            formData.append("file", files[0]);
+
+            if (files[0].size >= 5000000) {
+              alert("사진 용량이 너무 큽니다.");
+            } else {
+              alert("사진 용량이 첨부 가능합니다");
+            }
+          }
+        }}
+      >
+        {targetOn ? (
+          <MDEditor
+            value={markdown}
+            onChange={onChangeValue}
+            height={1000}
+            style={{ width: "100%" }}
+          />
+        ) : (
+          <MDEditor
+            value={markdown}
+            onChange={onChangeValue}
+            height={1000}
+            style={{ width: "100%", zIndex: -1 }}
+          />
+        )}
+      </FileDrop>
       <ButtonContainer>
         <Button text="발행" size="medium" onClick={post}></Button>
       </ButtonContainer>
