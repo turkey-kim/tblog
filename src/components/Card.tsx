@@ -38,6 +38,7 @@ const Card = styled.div`
   background-color: ${({ theme }) => theme.color.white};
   border-radius: 5px;
   justify-content: space-between;
+  box-shadow: 1px 1px 2px 2px ${({ theme }) => theme.color.bg150};
   cursor: pointer;
 `;
 
@@ -59,8 +60,9 @@ const CardFooter = styled.div`
 
 const CardDate = styled.div`
   text-align: right;
+  padding-right: 5px;
   font-size: 0.75rem;
-  width: 100%;
+  width: auto;
   height: auto;
   color: ${({ theme }) => theme.color.dark100};
   margin-bottom: 0.5rem;
@@ -70,9 +72,9 @@ const Author = styled.div`
   text-align: left;
   font-weight: 800;
   font-size: 1rem;
-  width: 100%;
+  width: auto;
   height: auto;
-  border-top: 1px solid ${({ theme }) => theme.color.bg100};
+  border-top: 1px solid ${({ theme }) => theme.color.bg150};
   padding: 0.75rem;
 `;
 
