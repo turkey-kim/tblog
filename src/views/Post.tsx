@@ -2,13 +2,14 @@ import { useState, useRef } from "react";
 import styled from "styled-components";
 import MDEditor, { ContextStore } from "@uiw/react-md-editor";
 import Button from "../components/Button";
-import useMousedown from "../utils/hooks/useMousedown";
 import postWriting from "../api/postWriting";
 import useInput from "../utils/hooks/useInput";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules";
 import { FileDrop } from "react-file-drop";
+import axios from "axios";
+import { SERVER_API_ADDRESS } from "../constants/link";
 
 const Post = () => {
   const [markdown, setMarkdown] = useState("");
@@ -18,7 +19,6 @@ const Post = () => {
   const user = useSelector((state: RootState) => state.userProfile);
 
   const targetRef = useRef<HTMLDivElement>(null);
-  const [targetOn] = useMousedown(targetRef);
   const navigate = useNavigate();
 
   const onChangeValue = (
@@ -49,37 +49,39 @@ const Post = () => {
         value={title}
         onChange={setText}
       ></Title>
-      <div className="wmde-markdown-var"></div>
-      <FileDrop
-        onDrop={(files, event) => {
-          if (files != null) {
-            const formData = new FormData();
-            formData.append("file", files[0]);
+      <div style={{ width: "100%" }}>
+        <div className="wmde-markdown-var"></div>
+        <FileDrop
+          onDrop={(files, event) => {
+            if (files != null) {
+              const formData = new FormData();
+              formData.append("image", files[0]);
+              if (files[0].size >= 5000000) {
+                alert("사진 용량이 너무 큽니다.");
+              } else {
+                axios
+                  .post(`${SERVER_API_ADDRESS}/uploads/`, formData, {
+                    withCredentials: true,
+                  })
+                  .then(function (response) {
+                    let imageName = response.data.imagePath;
 
-            if (files[0].size >= 5000000) {
-              alert("사진 용량이 너무 큽니다.");
-            } else {
-              alert("사진 용량이 첨부 가능합니다");
+                    let newValue =
+                      "\n\n ![" +
+                      files[0].name +
+                      `](${SERVER_API_ADDRESS}/` +
+                      imageName +
+                      ")";
+
+                    onChangeValue(markdown + newValue);
+                  });
+              }
             }
-          }
-        }}
-      >
-        {targetOn ? (
-          <MDEditor
-            value={markdown}
-            onChange={onChangeValue}
-            height={1000}
-            style={{ width: "100%" }}
-          />
-        ) : (
-          <MDEditor
-            value={markdown}
-            onChange={onChangeValue}
-            height={1000}
-            style={{ width: "100%", zIndex: -1 }}
-          />
-        )}
-      </FileDrop>
+          }}
+        >
+          <MDEditor value={markdown} onChange={onChangeValue} height={1100} />
+        </FileDrop>
+      </div>
       <ButtonContainer>
         <Button text="발행" size="medium" onClick={post}></Button>
       </ButtonContainer>
@@ -104,6 +106,7 @@ const Title = styled.input`
   outline: none;
   font-size: larger;
   font-weight: 700;
+  padding: 15px;
 `;
 
 const ButtonContainer = styled.div`
