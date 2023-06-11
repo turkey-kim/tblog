@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules";
 import { FileDrop } from "react-file-drop";
-import axios from "axios";
+import uploadImage from "../api/uploadImage";
 import { SERVER_API_ADDRESS } from "../constants/link";
 
 const Post = () => {
@@ -41,6 +41,18 @@ const Post = () => {
     navigate("/test");
   };
 
+  async function upload(files: FileList, formData: FormData) {
+    console.log(formData);
+    const file = await uploadImage("api/uploadFile", formData);
+    const imageName = file?.data.imagePath;
+    console.log(imageName);
+
+    let newValue =
+      "\n\n ![" + files[0].name + `](${SERVER_API_ADDRESS}/` + imageName + ")";
+
+    onChangeValue(markdown + newValue);
+  }
+
   return (
     <Container data-color-mode="light" ref={targetRef}>
       <Title
@@ -59,22 +71,7 @@ const Post = () => {
               if (files[0].size >= 5000000) {
                 alert("사진 용량이 너무 큽니다.");
               } else {
-                axios
-                  .post(`${SERVER_API_ADDRESS}/uploads/`, formData, {
-                    withCredentials: true,
-                  })
-                  .then(function (response) {
-                    let imageName = response.data.imagePath;
-
-                    let newValue =
-                      "\n\n ![" +
-                      files[0].name +
-                      `](${SERVER_API_ADDRESS}/` +
-                      imageName +
-                      ")";
-
-                    onChangeValue(markdown + newValue);
-                  });
+                upload(files, formData);
               }
             }
           }}
