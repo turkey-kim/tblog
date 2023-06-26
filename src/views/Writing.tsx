@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import Button from "../components/Button";
 import { Blockquote, Code } from "../assets/markdown/components";
+import Comment from "../components/Comment";
 
 function Writing() {
   let { id } = useParams();
@@ -77,6 +78,7 @@ function Writing() {
           {writing.content}
         </ReactMarkdown>
       </Content>
+      <Comment></Comment>
     </Container>
   );
 }
