@@ -3,12 +3,28 @@ import Button from "./Button";
 import useInput from "../utils/hooks/useInput";
 import { FormEvent } from "react";
 import postComment from "../api/postComment";
+import { RootState } from "../modules";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 function Comment() {
   const [text, setText] = useInput({ comment: "" });
   const { comment } = text;
 
-  function submitComment(e: FormEvent) {}
+  const user = useSelector((state: RootState) => state.userProfile?.id);
+  const { id } = useParams();
+
+  function submitComment(e: FormEvent) {
+    const date = new Date();
+    postComment(
+      "api/post_comment",
+      id,
+      user,
+      comment,
+      date.toLocaleDateString()
+    );
+  }
+
   return (
     <Container>
       <InputForm onSubmit={submitComment}>

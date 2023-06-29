@@ -3,15 +3,17 @@ import { SERVER_API_ADDRESS } from "../constants/link";
 
 function postComment(
   apiEndpoint: string,
-  author: string | undefined,
-  content: string | null,
+  id: string | undefined,
+  user: string | undefined,
+  content: string | undefined,
   date: string
 ) {
   return axios
     .post(
       `${SERVER_API_ADDRESS}/${apiEndpoint}`,
       {
-        author: author,
+        id: id,
+        user: user,
         content: content,
         date: date,
       },
