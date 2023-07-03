@@ -11,6 +11,7 @@ import remarkGfm from "remark-gfm";
 import Button from "../components/Button";
 import { Blockquote, Code } from "../assets/markdown/components";
 import CommentBox from "../components/CommentBox";
+import Comments from "../components/Comments";
 
 function Writing() {
   let { id } = useParams();
@@ -79,6 +80,7 @@ function Writing() {
         </ReactMarkdown>
       </Content>
       <CommentBox></CommentBox>
+      <Comments></Comments>
     </Container>
   );
 }
