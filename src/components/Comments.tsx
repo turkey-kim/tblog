@@ -1,21 +1,17 @@
 import styled from "styled-components";
 import getComments from "../api/getComments";
 import { useParams } from "react-router-dom";
-import { ReactEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import UserImage from "./UserImage";
 import deleteComment from "../api/deleteComment";
 import editComment from "../api/editComment";
-import useInput from "../utils/hooks/useInput";
 
 function Comments() {
   const { id } = useParams();
   const [comments, setComments] = useState([]);
-  const [editTarget, setEditTarget] = useState("");
-  const [text, setText] = useInput({
-    content: "",
-  });
-  let { content } = text;
+  let [editTarget, setEditTarget] = useState("");
+  let [text, setText] = useState("");
 
   useEffect(() => {
     async function showComments() {
@@ -36,6 +32,10 @@ function Comments() {
     window.location.reload();
   }
 
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+
   return (
     <Container>
       {comments.length != 0
@@ -48,18 +48,26 @@ function Comments() {
               </Header>
               <Body>
                 {editTarget === comment._id ? (
-                  <form
-                    onSubmit={(e: any) => {
-                      editThis(comment._id, content);
-                    }}
-                  >
-                    <input
-                      name="content"
-                      value={content}
-                      onChange={setText}
-                    ></input>
-                    <Button text="submit"></Button>
-                  </form>
+                  <div>
+                    <form
+                      onSubmit={() => {
+                        editThis(comment._id, text);
+                      }}
+                    >
+                      <input
+                        name="content"
+                        value={text}
+                        onChange={onChange}
+                      ></input>
+                      <Button text="수정완료"></Button>
+                    </form>
+                    <Button
+                      text="취소"
+                      onClick={() => {
+                        setEditTarget("");
+                      }}
+                    ></Button>
+                  </div>
                 ) : (
                   <p>{comment.content}</p>
                 )}
@@ -71,6 +79,7 @@ function Comments() {
                   text="수정"
                   onClick={() => {
                     setEditTarget(comment._id);
+                    setText(comment.content);
                   }}
                 ></Button>
                 <Button
