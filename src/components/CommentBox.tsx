@@ -7,7 +7,7 @@ import { RootState } from "../modules";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-function Comment() {
+function CommentBox() {
   const [text, setText] = useInput({ comment: "" });
   const { comment } = text;
 
@@ -62,4 +62,4 @@ const Input = styled.input`
   font-size: large;
 `;
 
-export default Comment;
+export default CommentBox;
