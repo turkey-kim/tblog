@@ -6,12 +6,16 @@ import Button from "../components/Button";
 import UserImage from "./UserImage";
 import deleteComment from "../api/deleteComment";
 import editComment from "../api/editComment";
+import { RootState } from "../modules";
+import { useSelector } from "react-redux";
 
 function Comments() {
   const { id } = useParams();
   const [comments, setComments] = useState([]);
   let [editTarget, setEditTarget] = useState("");
   let [text, setText] = useState("");
+
+  const user = useSelector((state: RootState) => state.userProfile?.id);
 
   useEffect(() => {
     async function showComments() {
@@ -72,25 +76,29 @@ function Comments() {
                   <p>{comment.content}</p>
                 )}
               </Body>
-              <Footer>
-                <Button
-                  margin="3px"
-                  size="small"
-                  text="수정"
-                  onClick={() => {
-                    setEditTarget(comment._id);
-                    setText(comment.content);
-                  }}
-                ></Button>
-                <Button
-                  margin="3px"
-                  size="small"
-                  text="삭제"
-                  onClick={() => {
-                    deleteThis(comment._id);
-                  }}
-                ></Button>
-              </Footer>
+              {comment.user == user ? (
+                <Footer>
+                  <Button
+                    margin="3px"
+                    size="small"
+                    text="수정"
+                    onClick={() => {
+                      setEditTarget(comment._id);
+                      setText(comment.content);
+                    }}
+                  ></Button>
+                  <Button
+                    margin="3px"
+                    size="small"
+                    text="삭제"
+                    onClick={() => {
+                      deleteThis(comment._id);
+                    }}
+                  ></Button>
+                </Footer>
+              ) : (
+                <Footer></Footer>
+              )}
             </Comment>
           ))
         : null}
