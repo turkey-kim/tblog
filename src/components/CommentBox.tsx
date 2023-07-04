@@ -15,14 +15,19 @@ function CommentBox() {
   const { id } = useParams();
 
   function submitComment(e: FormEvent) {
-    const date = new Date();
-    postComment(
-      "api/post_comment",
-      id,
-      user,
-      comment,
-      date.toLocaleDateString()
-    );
+    if (user != null) {
+      const date = new Date();
+      postComment(
+        "api/post_comment",
+        id,
+        user,
+        comment,
+        date.toLocaleDateString()
+      );
+    } else {
+      e.preventDefault();
+      alert("로그인 하세요.");
+    }
   }
 
   return (
