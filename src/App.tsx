@@ -17,6 +17,7 @@ import NotFound from "./views/NotFound";
 import { useEffect } from "react";
 import useTokenChecker from "./utils/hooks/useTokenChecker";
 import { useDispatch } from "react-redux";
+import { clearUserProfile } from "./modules/userProfile";
 import { login, logout } from "./modules/isLoggedin";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
       dispatch(login());
     } else {
       dispatch(logout());
+      dispatch(clearUserProfile(null));
     }
   }, [isTokenValid, isLoading]);
 
