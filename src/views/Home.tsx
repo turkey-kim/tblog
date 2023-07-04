@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import getWritings from "../api/getWritings";
 import { useState, useEffect } from "react";
 import WritingImage from "../components/WritingImage";
@@ -7,7 +6,6 @@ import Card from "../components/Card";
 
 function Home() {
   let [arr, setArr] = useState<any>([{}]);
-  let navigate = useNavigate();
 
   useEffect(() => {
     async function posts() {
