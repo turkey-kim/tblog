@@ -3,19 +3,21 @@ import { SERVER_API_ADDRESS } from "../constants/link";
 
 function postComment(
   apiEndpoint: string,
-  id: string | undefined,
+  pageNumber: string | undefined,
   user: string | undefined,
   content: string | undefined,
-  date: string
+  date: string | undefined,
+  parentId?: string | undefined
 ) {
   return axios
     .post(
       `${SERVER_API_ADDRESS}/${apiEndpoint}`,
       {
-        id: id,
+        pageNumber: pageNumber,
         user: user,
         content: content,
         date: date,
+        parentId: parentId,
       },
       {
         withCredentials: true,
