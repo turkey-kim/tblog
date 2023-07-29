@@ -32,9 +32,20 @@ function CommentBox() {
 
   return (
     <Container>
+      <Title>댓글</Title>
       <InputForm onSubmit={submitComment}>
-        <Input name="comment" value={comment} onChange={setText}></Input>
-        <Button text="댓글 작성" size="medium" color="light"></Button>
+        <Input
+          name="comment"
+          value={comment}
+          onChange={setText}
+          autoComplete="off"
+        ></Input>
+        <Button
+          text="댓글 작성"
+          size="mediumLarge"
+          borderRadius="small"
+          margin="none"
+        ></Button>
       </InputForm>
     </Container>
   );
@@ -44,9 +55,14 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  align-items: flex-end;
+  align-items: flex-start;
+  margin: 5rem 0 3rem 0;
+`;
+
+const Title = styled.div`
+  font-weight: 700;
+  font-size: large;
+  margin: 1rem;
 `;
 
 const InputForm = styled.form`
@@ -60,7 +76,7 @@ const InputForm = styled.form`
 const Input = styled.input`
   height: 100px;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   border-radius: 5px;
   outline: none;
   border: 1px solid ${({ theme }) => theme.color.bg200};
