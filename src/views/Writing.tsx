@@ -98,7 +98,7 @@ const Container = styled.div`
 const WritingHeader = styled.div`
   width: 100%;
   height: 400px;
-  /* background-color: ${({ theme }) => theme.color.dark100}; */
+  margin: 0 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,7 +112,7 @@ const Title = styled.div`
   justify-content: left;
   font-weight: 700;
   font-size: 4rem;
-  /* background-color: ${({ theme }) => theme.color.bg200}; */
+  margin: 0 1rem;
 `;
 
 const Date = styled.div`
@@ -155,10 +155,9 @@ const Content = styled.div`
   display: flex;
   justify-content: left;
   flex-direction: column;
-  padding-top: 50px;
+  margin: 5rem 1rem;
   font-size: large;
   font-weight: 700;
-  /* background-color: lightGreen; */
   text-align: left;
 `;
 
