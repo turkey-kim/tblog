@@ -11,6 +11,7 @@ export interface Icolor {
   dark200: string;
   white: string;
   black: string;
+  lightGreen: string;
   green: string;
 }
 
@@ -37,7 +38,8 @@ const color = {
   dark200: "#333333",
   white: "#FFFFFF",
   black: "#262626",
-  green: "#4ef037",
+  lightGreen: "#4ef037",
+  green: "#00bd56",
 };
 
 const fontSize = {
