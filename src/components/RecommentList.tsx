@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import deleteComment from "../api/deleteComment";
 import editComment from "../api/editComment";
 import { useState } from "react";
+import EditInput from "./EditInput";
 
 interface Props {
   user: any;
@@ -30,6 +31,11 @@ function RecommentList({ user, date, content, id }: Props) {
     editComment(apiEndpoint, id, text, date.toLocaleDateString());
   }
 
+  function cancelEdit(e: any) {
+    e.preventDefault();
+    setOpenEdit(false);
+  }
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
@@ -37,70 +43,124 @@ function RecommentList({ user, date, content, id }: Props) {
   return (
     <Comment>
       <Header>
-        <UserImage size="small"></UserImage>
-        <div>{user}</div>
-        <div>{date}</div>
-      </Header>
-      <Body>
-        {openEdit == true ? (
-          <form onSubmit={editThis}>
-            <input value={text} onChange={onChange}></input>
-            <Button text="수정완료"></Button>
-          </form>
-        ) : (
-          content
-        )}
-      </Body>
-      <Footer>
+        <UserInfo>
+          <UserImage size="small"></UserImage>
+          <SubInfo>
+            <User>{user}</User>
+            <CommentDate>{date}</CommentDate>
+          </SubInfo>
+        </UserInfo>
         {auth == user ? (
-          <>
-            <Button
-              text="수정"
-              size="small"
+          <EditMenu>
+            <SubButton
               onClick={() => {
                 setText(content);
                 setOpenEdit(!openEdit);
               }}
-            ></Button>
-            <Button text="삭제" size="small" onClick={deleteThis}></Button>
-          </>
+            >
+              수정
+            </SubButton>
+            <SubButton onClick={deleteThis}>삭제</SubButton>
+          </EditMenu>
         ) : null}
-      </Footer>
+      </Header>
+      <Body>
+        {openEdit == true ? (
+          <EditInput
+            text={text}
+            onChange={onChange}
+            onSubmit={editThis}
+            cancel={cancelEdit}
+          ></EditInput>
+        ) : (
+          content
+        )}
+      </Body>
+      <Footer></Footer>
     </Comment>
   );
 }
 
 const Comment = styled.div`
   display: flex;
-  margin: 1vh;
+  margin: 1rem 0;
   border-radius: 5px;
   flex-direction: column;
   width: 98%;
   justify-content: center;
+  align-items: center;
   height: auto;
-  background-color: ${({ theme }) => theme.color.dark100};
+  background-color: ${({ theme }) => theme.color.bg100};
 `;
 
 const Header = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: auto;
-  border-bottom: 1px solid black;
 `;
 
 const Body = styled.div`
-  width: 100%;
+  width: 95%;
   height: auto;
   text-align: left;
+  margin: 20px 0;
+  font-size: medium;
 `;
 
 const Footer = styled.div`
   display: flex;
-  width: 100%;
+  width: 95%;
   height: auto;
   justify-content: flex-end;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: auto;
+  height: auto;
+  align-items: center;
+  margin: 10px;
+`;
+
+const SubInfo = styled.div`
+  display: flex;
+  flex-direction: Column;
+  margin-left: 10px;
+`;
+
+const User = styled.div`
+  display: flex;
+  font-weight: 600;
+  font-size: medium;
+  margin-bottom: 2px;
+`;
+
+const CommentDate = styled.div`
+  display: flex;
+  font-size: smaller;
+  color: ${({ theme }) => theme.color.dark150};
+`;
+
+const EditMenu = styled.div`
+  display: flex;
+  height: auto;
+  align-items: center;
+  margin: 5px;
+`;
+
+const SubButton = styled.button`
+  font-size: small;
+  border: none;
+  margin-top: 7px;
+  color: ${({ theme }) => theme.color.black};
+  background-color: ${({ theme }) => theme.color.bg100};
+
+  :hover {
+    color: ${({ theme }) => theme.color.green};
+  }
 `;
 
 export default RecommentList;
