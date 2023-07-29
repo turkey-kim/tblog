@@ -10,6 +10,7 @@ import { RootState } from "../modules";
 import { useSelector } from "react-redux";
 import ReCommentBox from "./ReCommentBox";
 import RecommentList from "./RecommentList";
+import EditInput from "./EditInput";
 
 function Comments() {
   const { id } = useParams();
@@ -53,72 +54,75 @@ function Comments() {
             <>
               <Comment>
                 <Header>
-                  <UserImage size="small"></UserImage>
-                  <div>{comment.user}</div>
-                  <div>{comment.date}</div>
+                  <UserInfo>
+                    <UserImage size="small"></UserImage>
+                    <SubInfo>
+                      <User>{comment.user}</User>
+                      <CommentDate>{comment.date}</CommentDate>
+                    </SubInfo>
+                  </UserInfo>
+                  {comment.user == user ? (
+                    <EditMenu>
+                      <SubButton
+                        onClick={() => {
+                          setEditTarget(comment._id);
+                          setText(comment.content);
+                        }}
+                      >
+                        수정
+                      </SubButton>
+                      <SubButton
+                        onClick={() => {
+                          deleteThis(comment._id);
+                        }}
+                      >
+                        삭제
+                      </SubButton>
+                    </EditMenu>
+                  ) : null}
                 </Header>
                 <Body>
                   {editTarget === comment._id ? (
-                    <div>
-                      <form
-                        onSubmit={() => {
-                          editThis(comment._id, text);
-                        }}
-                      >
-                        <input
-                          name="content"
-                          value={text}
-                          onChange={onChange}
-                        ></input>
-                        <Button text="수정완료"></Button>
-                      </form>
-                      <Button
-                        text="취소"
-                        onClick={() => {
-                          setEditTarget("");
-                        }}
-                      ></Button>
-                    </div>
+                    <EditInput
+                      text={text}
+                      onChange={onChange}
+                      onSubmit={() => {
+                        editThis(comment._id, text);
+                      }}
+                      cancel={() => {
+                        setEditTarget("");
+                      }}
+                    ></EditInput>
                   ) : (
                     <p>{comment.content}</p>
                   )}
                 </Body>
-                {comment.user == user ? (
+                {openRecomment == comment._id ? (
                   <Footer>
                     <Button
-                      margin="3px"
+                      text="답글 닫기"
+                      color="green"
                       size="small"
-                      text="수정"
+                      margin="none"
+                      borderRadius="small"
                       onClick={() => {
-                        setEditTarget(comment._id);
-                        setText(comment.content);
-                      }}
-                    ></Button>
-                    <Button
-                      margin="3px"
-                      size="small"
-                      text="삭제"
-                      onClick={() => {
-                        deleteThis(comment._id);
+                        setOpenRecomment("");
                       }}
                     ></Button>
                   </Footer>
-                ) : null}
-                {openRecomment == comment._id ? (
-                  <Button
-                    text="답글 닫기"
-                    color="light"
-                    onClick={() => {
-                      setOpenRecomment("");
-                    }}
-                  ></Button>
                 ) : (
-                  <Button
-                    text="답글 열기"
-                    onClick={() => {
-                      setOpenRecomment(comment._id);
-                    }}
-                  ></Button>
+                  <Footer>
+                    <Button
+                      text="답글 열기"
+                      color="green"
+                      size="small"
+                      margin="none"
+                      borderRadius="small"
+                      onClick={() => {
+                        setOpenRecomment(comment._id);
+                      }}
+                    ></Button>
+                  </Footer>
                 )}
               </Comment>
               {openRecomment == comment._id ? (
@@ -133,7 +137,6 @@ function Comments() {
                       ></RecommentList>
                     ) : null
                   )}
-
                   <ReCommentBox parentId={openRecomment}></ReCommentBox>
                 </ReComment>
               ) : null}
@@ -150,17 +153,88 @@ const Container = styled.div`
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 const Comment = styled.div`
   display: flex;
-  margin: 1vh;
+  margin: 2rem 0 1rem 0;
   border-radius: 5px;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: auto;
-  background-color: ${({ theme }) => theme.color.bg200};
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: auto;
+`;
+
+const Body = styled.div`
+  width: 95%;
+  height: auto;
+  text-align: left;
+  margin: 20px 0;
+  font-size: medium;
+`;
+
+const Footer = styled.div`
+  display: flex;
+  width: 95%;
+  height: auto;
+  justify-content: flex-start;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: auto;
+  height: auto;
+  align-items: center;
+  margin: 10px;
+`;
+
+const SubInfo = styled.div`
+  display: flex;
+  flex-direction: Column;
+  margin-left: 10px;
+`;
+
+const User = styled.div`
+  display: flex;
+  font-weight: 600;
+  font-size: medium;
+  margin-bottom: 2px;
+`;
+
+const CommentDate = styled.div`
+  display: flex;
+  font-size: smaller;
+  color: ${({ theme }) => theme.color.dark150};
+`;
+
+const EditMenu = styled.div`
+  display: flex;
+  height: auto;
+  align-items: center;
+  margin: 5px;
+`;
+
+const SubButton = styled.button`
+  font-size: small;
+  border: none;
+  margin-top: 7px;
+  color: ${({ theme }) => theme.color.black};
+  background-color: ${({ theme }) => theme.color.bg50};
+
+  :hover {
+    color: ${({ theme }) => theme.color.green};
+  }
 `;
 
 const ReComment = styled.div`
@@ -169,31 +243,10 @@ const ReComment = styled.div`
   border-radius: 5px;
   flex-direction: column;
   align-items: flex-end;
-  width: 100%;
+  width: 95%;
   height: auto;
-  background-color: ${({ theme }) => theme.color.dark150};
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: auto;
-  border-bottom: 1px solid black;
-`;
-
-const Body = styled.div`
-  width: 100%;
-  height: auto;
-  text-align: left;
-`;
-
-const Footer = styled.div`
-  display: flex;
-  width: 100%;
-  height: auto;
-  justify-content: flex-end;
+  background-color: ${({ theme }) => theme.color.bg100};
+  border: 1px solid ${({ theme }) => theme.color.bg150};
 `;
 
 export default Comments;
