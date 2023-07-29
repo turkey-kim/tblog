@@ -79,14 +79,16 @@ function Writing() {
           {writing.content}
         </ReactMarkdown>
       </Content>
-      <CommentBox></CommentBox>
-      <Comments></Comments>
+      <CommentWrapper>
+        <CommentBox></CommentBox>
+        <Comments></Comments>
+      </CommentWrapper>
     </Container>
   );
 }
 
 const Container = styled.div`
-  height: auto;
+  height: 100%;
   width: 900px;
   margin-left: auto;
   margin-right: auto;
@@ -159,6 +161,14 @@ const Content = styled.div`
   font-size: large;
   font-weight: 700;
   text-align: left;
+`;
+
+const CommentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5rem 0;
 `;
 
 export default Writing;
