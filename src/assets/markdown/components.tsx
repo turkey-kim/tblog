@@ -1,14 +1,14 @@
 import React from "react";
 
-interface BlockquoteProps {
+interface Props {
   children: React.ReactNode & React.ReactNode[];
 }
 
-export const Blockquote: React.FC<BlockquoteProps> = ({ children }) => (
+export const Blockquote: React.FC<Props> = ({ children }) => (
   <blockquote
     style={{
       backgroundColor: "#F3F3F3",
-      borderLeft: "0.25rem solid #4ef037",
+      borderLeft: `0.25rem solid green`,
       borderRadius: "0.15rem",
       paddingLeft: "1rem",
     }}
@@ -17,11 +17,7 @@ export const Blockquote: React.FC<BlockquoteProps> = ({ children }) => (
   </blockquote>
 );
 
-interface CodeProps {
-  children: React.ReactNode & React.ReactNode[];
-}
-
-export const Code: React.FC<CodeProps> = ({ children }) => (
+export const Code: React.FC<Props> = ({ children }) => (
   <pre
     style={{
       backgroundColor: "black",
@@ -36,11 +32,7 @@ export const Code: React.FC<CodeProps> = ({ children }) => (
   </pre>
 );
 
-interface PProps {
-  children: React.ReactNode & React.ReactNode[];
-}
-
-export const P: React.FC<PProps> = ({ children }) => (
+export const P: React.FC<Props> = ({ children }) => (
   <p
     style={{
       fontWeight: 500,
@@ -49,4 +41,16 @@ export const P: React.FC<PProps> = ({ children }) => (
   >
     {children}
   </p>
+);
+
+export const H1: React.FC<Props> = ({ children }) => (
+  <div style={{ borderBottom: "solid 0.5px #585858" }}>
+    <h1>{children}</h1>
+  </div>
+);
+
+export const H2: React.FC<Props> = ({ children }) => (
+  <div style={{ borderBottom: "solid 0.5px #585858" }}>
+    <h2>{children}</h2>
+  </div>
 );

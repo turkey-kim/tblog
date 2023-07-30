@@ -9,7 +9,7 @@ import { RootState } from "../modules";
 import { useNavigate } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import Button from "../components/Button";
-import { Blockquote, Code, P } from "../assets/markdown/components";
+import { Blockquote, Code, P, H1, H2 } from "../assets/markdown/components";
 import CommentBox from "../components/CommentBox";
 import Comments from "../components/Comments";
 
@@ -71,6 +71,8 @@ function Writing() {
       <Content>
         <ReactMarkdown
           components={{
+            h1: H1,
+            h2: H2,
             blockquote: Blockquote,
             code: Code,
             p: P,
@@ -139,7 +141,6 @@ const Author = styled.div`
   align-items: center;
   font-size: large;
   font-weight: 700;
-  /* background-color: red; */
 `;
 
 const AuthorMenu = styled.div`
