@@ -9,7 +9,7 @@ import { RootState } from "../modules";
 import { useNavigate } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import Button from "../components/Button";
-import { Blockquote, Code } from "../assets/markdown/components";
+import { Blockquote, Code, P } from "../assets/markdown/components";
 import CommentBox from "../components/CommentBox";
 import Comments from "../components/Comments";
 
@@ -73,6 +73,10 @@ function Writing() {
           components={{
             blockquote: Blockquote,
             code: Code,
+            p: P,
+            img: ({ node, ...props }) => (
+              <img style={{ maxWidth: "100%" }} {...props} alt="" />
+            ),
           }}
           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
         >

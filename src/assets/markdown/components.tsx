@@ -24,12 +24,29 @@ interface CodeProps {
 export const Code: React.FC<CodeProps> = ({ children }) => (
   <pre
     style={{
-      backgroundColor: "#F3F3F3",
+      backgroundColor: "black",
       padding: "2rem",
       margin: "2rem",
       borderRadius: "0.15rem",
+      fontWeight: 500,
+      color: "green",
     }}
   >
     {children}
   </pre>
+);
+
+interface PProps {
+  children: React.ReactNode & React.ReactNode[];
+}
+
+export const P: React.FC<PProps> = ({ children }) => (
+  <p
+    style={{
+      fontWeight: 500,
+      lineHeight: 1.6,
+    }}
+  >
+    {children}
+  </p>
 );
