@@ -1,1 +1,2 @@
-export const SERVER_API_ADDRESS = "http://localhost:5000";
+export const SERVER_API_ADDRESS =
+  "https://port-0-tblog-server-4fju66f2clmzty3z1.sel5.cloudtype.app";
