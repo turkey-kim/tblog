@@ -1,10 +1,11 @@
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { truncateString } from "../utils";
 
 interface Props {
   id: any;
-  title: any;
+  title: string;
   date: any;
   author: any;
   image?: ReactElement;
@@ -20,7 +21,7 @@ function CardComponent({ id, title, date, author, image }: Props) {
       }}
     >
       {image}
-      <CardTitle>{title}</CardTitle>
+      <CardTitle>{truncateString(title, 35)}</CardTitle>
       <CardFooter>
         <CardDate>{date}</CardDate>
         <Author>by {author}</Author>
