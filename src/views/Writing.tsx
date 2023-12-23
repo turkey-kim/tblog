@@ -105,29 +105,30 @@ const Container = styled.div`
 
 const WritingHeader = styled.div`
   width: 100%;
-  height: 400px;
   margin: 0 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid ${({ theme }) => theme.color.bg200};
 `;
 
 const Title = styled.div`
-  width: 100%;
+  width: auto;
   height: 250px;
   display: flex;
   align-items: center;
-  justify-content: left;
+  text-align: left;
   font-weight: 700;
-  font-size: 4rem;
-  margin: 0 1rem;
+  font-size: 3rem;
+  margin: 1rem;
 `;
 
 const Date = styled.div`
   width: 100%;
   height: auto;
   display: flex;
-  justify-content: right;
+  justify-content: flex-end;
   align-items: center;
   font-size: small;
   color: ${({ theme }) => theme.color.bg250};
