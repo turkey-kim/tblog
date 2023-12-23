@@ -136,6 +136,7 @@ const EntireField = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 100vh;
   margin: 0 20px 0 20px;
 
   @media ${({ theme }) => theme.device.mobile} {

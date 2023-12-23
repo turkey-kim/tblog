@@ -75,9 +75,10 @@ const HeaderBox = styled.div`
   justify-content: "space-between";
   padding: none;
   background-color: ${({ theme }) => theme.color.black};
-  height: 50px;
+  width: 100%;
+  height: 70px;
   justify-content: space-between;
-  padding: 0px 20px 0px 20px;
+  padding: 0rem 2rem 0rem 2rem;
   align-items: center;
 `;
 

@@ -12,6 +12,7 @@ import Button from "../components/Button";
 import { Blockquote, Code, P, H1, H2 } from "../assets/markdown/components";
 import CommentBox from "../components/CommentBox";
 import Comments from "../components/Comments";
+import "../markdown.css";
 
 function Writing() {
   let { id } = useParams();
@@ -70,16 +71,7 @@ function Writing() {
       ) : null}
       <Content>
         <ReactMarkdown
-          components={{
-            h1: H1,
-            h2: H2,
-            blockquote: Blockquote,
-            code: Code,
-            p: P,
-            img: ({ node, ...props }) => (
-              <img style={{ maxWidth: "100%" }} {...props} alt="" />
-            ),
-          }}
+          className="markdown-body"
           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
         >
           {writing.content}
