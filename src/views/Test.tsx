@@ -1,61 +1,44 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import getWritings from "../api/getWritings";
+import { useState, useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
 import Button from "../components/Button";
-import WritingImage from "../components/WritingImage";
-import Card from "../components/Card";
 
 function Test() {
-  let [arr, setArr] = useState<any>([{}]);
-  let navigate = useNavigate();
+  const [input, setInput] = useState("");
 
-  useEffect(() => {
-    async function posts() {
-      const result = await getWritings("api/get_writings");
-      // console.log(result?.data);
-      setArr(result?.data);
-    }
-    posts();
-  }, []);
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(input);
+    setInput("");
+  };
 
   return (
     <Container>
-      <p>테스트페이지</p>
+      <p>챗지피티 테스트</p>
       <Button text="test" color="light"></Button>
-      <Button text="test2" color="dark"></Button>
-      <Button text="test2" color="dark" size="small"></Button>
-      <Button text="test2" color="dark" size="large"></Button>
-      <Button text="test2" color="light" size="small"></Button>
-      <Button text="test2" color="light" size="large"></Button>
-      <CardDeque>
-        {arr.length != 0
-          ? arr.map((element: any) => (
-              <Card
-                id={element.id}
-                title={element.title}
-                date={element.date}
-                author={element.author}
-                image={<WritingImage></WritingImage>}
-              ></Card>
-            ))
-          : null}
-      </CardDeque>
+      <StyledForm onSubmit={onSubmit}>
+        <StyledInput onChange={onChangeInput} value={input}></StyledInput>
+        <StyledSubmit type="submit" text="submit" color="light" />
+      </StyledForm>
     </Container>
   );
 }
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100vw;
   height: 100vh;
 `;
 
-const CardDeque = styled.div`
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+const StyledForm = styled.form``;
+const StyledInput = styled.input`
+  width: 50%;
 `;
+
+const StyledSubmit = styled(Button)``;
 
 export default Test;

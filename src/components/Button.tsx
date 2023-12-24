@@ -4,8 +4,10 @@ import React from "react";
 type ButtonSize = "small" | "medium" | "mediumLarge" | "large";
 type ButtonColor = "light" | "dark" | "green";
 type BorderRadius = "small" | "medium" | "large";
+type ButtonType = "button" | "submit" | "reset";
 
 interface Props {
+  type?: ButtonType;
   onClick?: any;
   margin?: string;
   text?: string;
