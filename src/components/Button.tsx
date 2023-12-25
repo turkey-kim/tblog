@@ -4,8 +4,10 @@ import React from "react";
 type ButtonSize = "small" | "medium" | "mediumLarge" | "large";
 type ButtonColor = "light" | "dark" | "green";
 type BorderRadius = "small" | "medium" | "large";
+type ButtonType = "button" | "submit" | "reset";
 
 interface Props {
+  type?: ButtonType;
   onClick?: any;
   margin?: string;
   text?: string;
@@ -56,7 +58,7 @@ const Btn = styled.button<Props>`
       case "small":
         return "30px";
       case "mediumLarge":
-        return "35px";
+        return "40px";
       case "large":
         return "45px";
       default:

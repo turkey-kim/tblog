@@ -1,5 +1,4 @@
 import { createGlobalStyle, DefaultTheme } from "styled-components";
-import "./App.css";
 
 export interface Icolor {
   bg50: string;
@@ -23,9 +22,16 @@ export interface IfontSize {
   extraLarge: string;
 }
 
+export interface Ishadow {
+  shadow1: string;
+  shadow2: string;
+  shadow3: string;
+}
+
 interface Theme {
   color: Icolor;
   fontSize: IfontSize;
+  shadow: Ishadow;
 }
 
 const color = {
@@ -55,16 +61,24 @@ const device = {
   mobile: `screen and (max-width: 450px)`,
 };
 
+const shadow = {
+  shadow1: "0px 4px 8px rgba(0, 0, 0, 0.04)",
+  shadow2: "0px 8px 16px rgba(0, 0, 0, 0.08)",
+  shadow3: "0px 12px 40px rgba(0, 0, 0, 0.12)",
+};
+
 export const theme = {
   color,
   fontSize,
   device,
+  shadow,
 };
 
 export const myTheme: DefaultTheme = {
   color,
   fontSize,
   device,
+  shadow,
 };
 
 export const MyGlobalStyle = createGlobalStyle<{ theme: Theme }>`
@@ -73,6 +87,7 @@ export const MyGlobalStyle = createGlobalStyle<{ theme: Theme }>`
         background-color: ${(props) => props.theme.color?.bg50};
         font-size : ${(props) => props.theme.fontSize?.medium};
         color : ${(props) => props.theme.color?.black};
+        box-shadow : ${(props) => props.theme.shadow?.shadow1}
         
     }
 `;
