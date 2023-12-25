@@ -1,44 +1,24 @@
-import { useState, useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
-import Button from "../components/Button";
+import "../markdown.css";
+
+interface RoleProps {
+  role: string;
+}
 
 function Test() {
-  const [input, setInput] = useState("");
-
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
-
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert(input);
-    setInput("");
-  };
-
-  return (
-    <Container>
-      <p>챗지피티 테스트</p>
-      <Button text="test" color="light"></Button>
-      <StyledForm onSubmit={onSubmit}>
-        <StyledInput onChange={onChangeInput} value={input}></StyledInput>
-        <StyledSubmit type="submit" text="submit" color="light" />
-      </StyledForm>
-    </Container>
-  );
+  return <Container>테스트 페이지!</Container>;
 }
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
+  align-self: center;
+  width: 80%;
+  min-height: 100vh;
+  padding: 2rem 2rem 5rem 2rem;
+  background-color: ${({ theme }) => theme.color.white};
+  box-shadow: ${({ theme }) => theme.shadow.shadow1};
 `;
-
-const StyledForm = styled.form``;
-const StyledInput = styled.input`
-  width: 50%;
-`;
-
-const StyledSubmit = styled(Button)``;
 
 export default Test;
