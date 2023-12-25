@@ -58,7 +58,7 @@ const Btn = styled.button<Props>`
       case "small":
         return "30px";
       case "mediumLarge":
-        return "35px";
+        return "40px";
       case "large":
         return "45px";
       default:

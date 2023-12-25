@@ -7,3 +7,11 @@ export const truncateString = (str: string, maxLength: number) => {
     }
   }
 };
+
+export const scrollToBottom = (cotainerId: string) => {
+  const container = document.getElementById(cotainerId); // 컨테이너의 실제 ID로 변경
+
+  if (container) {
+    container.scrollTop = container.scrollHeight;
+  }
+};

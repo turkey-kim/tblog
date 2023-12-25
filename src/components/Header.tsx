@@ -70,6 +70,7 @@ function Header() {
 }
 
 const HeaderBox = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: "space-between";
