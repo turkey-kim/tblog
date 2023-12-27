@@ -2,13 +2,12 @@ import { useState, useRef } from "react";
 import styled from "styled-components";
 import MDEditor, { ContextStore } from "@uiw/react-md-editor";
 import Button from "../components/Button";
-import postWriting from "../api/postWriting";
+import { postWriting, uploadImage } from "../api/writing";
 import useInput from "../utils/hooks/useInput";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules";
 import { FileDrop } from "react-file-drop";
-import uploadImage from "../api/uploadImage";
 import { SERVER_API_ADDRESS } from "../constants/link";
 
 const Post = () => {

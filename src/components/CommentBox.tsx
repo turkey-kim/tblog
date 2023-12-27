@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Button from "./Button";
 import useInput from "../utils/hooks/useInput";
 import { FormEvent } from "react";
-import postComment from "../api/postComment";
+import { postComment } from "../api/comment";
 import { RootState } from "../modules";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";

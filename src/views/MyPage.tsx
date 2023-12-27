@@ -3,7 +3,7 @@ import UserImage from "../components/UserImage";
 import { RootState } from "../modules";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import getMyWriting from "../api/getMyWritings";
+import { getMyWriting } from "../api/writing";
 import WritingImage from "../components/WritingImage";
 import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
@@ -18,7 +18,7 @@ function MyPage() {
       try {
         let apiEndPoint = "api/get_my_writing";
         const result = await getMyWriting(user?.id, apiEndPoint);
-        setArr(result?.data);
+        setArr(result);
       } catch (err) {
         console.error(err);
       }

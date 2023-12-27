@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Button from "./Button";
 import useInput from "../utils/hooks/useInput";
-import postComment from "../api/postComment";
+import { postComment } from "../api/comment";
 import { useParams } from "react-router-dom";
 import { RootState } from "../modules";
 import { useSelector } from "react-redux";

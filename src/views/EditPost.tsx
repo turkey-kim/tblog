@@ -3,12 +3,12 @@ import styled from "styled-components";
 import MDEditor, { ContextStore } from "@uiw/react-md-editor";
 import Button from "../components/Button";
 import useMousedown from "../utils/hooks/useMousedown";
-import editWriting from "../api/editWriting";
+import { editWriting } from "../api/writing";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules";
 import { useParams } from "react-router-dom";
-import getOneWriting from "../api/getOneWriting";
+import { getOneWriting } from "../api/writing";
 
 const EditPost = () => {
   useEffect(() => {
