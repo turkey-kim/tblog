@@ -2,7 +2,7 @@ import { FormEvent } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useInput from "../utils/hooks/useInput";
-import sendUserInfo from "../api/sendUserInfo";
+import { sendUserInfo } from "../api/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../modules/isLoggedin";
 import { setUserProfile } from "../modules/userProfile";

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useInput from "../utils/hooks/useInput";
 import { isPasswordValid, idChecker } from "../helper/signUp";
-import sendUserInfo from "../api/sendUserInfo";
+import { sendUserInfo } from "../api/auth";
 
 function Login() {
   const navigate = useNavigate();

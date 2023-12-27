@@ -24,11 +24,13 @@ export const sendUserInfo = async (
   apiEndpoint?: string | null
 ) => {
   try {
-    return axios.post(`${SERVER_API_ADDRESS}/${apiEndpoint}`, {
+    const res = await axios.post(`${SERVER_API_ADDRESS}/${apiEndpoint}`, {
       id: id,
       pw: pw,
       nickname: nickname,
     });
+
+    return res.data;
   } catch (err) {
     console.error(err);
   }
