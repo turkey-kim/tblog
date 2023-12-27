@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import tokenAuthorization from "../../api/authWithToken";
+import { authWithToken } from "../../api/auth";
 
 function useTokenChecker() {
   let [isTokenValid, setIsTokenValid] = useState(false);
@@ -9,12 +9,12 @@ function useTokenChecker() {
   useEffect(() => {
     let token = localStorage.getItem("jwt");
     async function sendToken() {
-      const response = await tokenAuthorization(token, apiEndpoint);
-      if (response.data.tokenValidity) {
+      const response = await authWithToken(token, apiEndpoint);
+      if (response.tokenValidity) {
         console.log("갱신결과 : " + response.data.tokenValidity);
         setIsLoading(false);
         setIsTokenValid(true);
-      } else if (!response.data.tokenValidity) {
+      } else if (!response.tokenValidity) {
         console.log("갱신결과 : " + response.data.tokenValidity);
         setIsLoading(false);
         setIsTokenValid(false);

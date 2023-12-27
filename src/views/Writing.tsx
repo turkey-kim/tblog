@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import getOneWriting from "../api/getOneWriting";
-import deleteWriting from "../api/deleteWriting";
+import { getOneWriting } from "../api/writing";
+import { deleteWriting } from "../api/writing";
 import { useEffect, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { useSelector } from "react-redux";

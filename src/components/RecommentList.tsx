@@ -3,8 +3,7 @@ import UserImage from "./UserImage";
 import Button from "./Button";
 import { RootState } from "../modules";
 import { useSelector } from "react-redux";
-import deleteComment from "../api/deleteComment";
-import editComment from "../api/editComment";
+import { editComment, deleteComment } from "../api/comment";
 import { useState } from "react";
 import EditInput from "./EditInput";
 

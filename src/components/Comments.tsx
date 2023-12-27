@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import getComments from "../api/getComments";
+import { getComments, editComment, deleteComment } from "../api/comment";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import UserImage from "./UserImage";
-import deleteComment from "../api/deleteComment";
-import editComment from "../api/editComment";
 import { RootState } from "../modules";
 import { useSelector } from "react-redux";
 import ReCommentBox from "./ReCommentBox";
@@ -26,8 +24,8 @@ function Comments() {
     async function showComments() {
       const result = await getComments("api/get_comments", id);
       const result2 = await getComments("api/get_recomments", id);
-      setComments(result?.data);
-      setRecomments(result2?.data);
+      setComments(result);
+      setRecomments(result2);
     }
 
     showComments();
