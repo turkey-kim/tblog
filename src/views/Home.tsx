@@ -1,28 +1,34 @@
 import styled from "styled-components";
-import getWritings from "../api/getWritings";
-import { useState, useEffect } from "react";
+import { getWritings } from "../api/writing";
 import WritingImage from "../components/WritingImage";
 import Card from "../components/Card";
+import { useQuery } from "@tanstack/react-query";
+
+interface Writing {
+  id: string;
+  title: string;
+  date: string;
+  author: string;
+  // Add other properties as needed
+}
 
 function Home() {
-  let [arr, setArr] = useState<any>([{}]);
-
-  useEffect(() => {
-    async function posts() {
-      const result = await getWritings("api/get_writings");
-      // console.log(result?.data);
-      setArr(result?.data);
-    }
-    posts();
-  }, []);
+  const { data } = useQuery<Writing[]>({
+    queryKey: ["getList"],
+    queryFn: async () => {
+      return await getWritings("api/get_writings");
+    },
+    staleTime: Infinity,
+  });
 
   return (
     <Container>
       <ContainerHeader></ContainerHeader>
       <CardDeque>
-        {arr.length != 0
-          ? arr.map((element: any) => (
+        {data
+          ? data.map((element: any) => (
               <Card
+                key={element.id}
                 id={element.id}
                 title={element.title}
                 date={element.date}
