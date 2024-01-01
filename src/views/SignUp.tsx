@@ -5,7 +5,7 @@ import useInput from "../utils/hooks/useInput";
 import { isPasswordValid, idChecker } from "../helper/signUp";
 import { sendUserInfo } from "../api/auth";
 
-function Login() {
+function SignUp() {
   const navigate = useNavigate();
   const [text, setText] = useInput({
     id: "",
@@ -76,14 +76,14 @@ function Login() {
           <LoginBox>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <div style={{ width: "100%", display: "inline-flex" }}>
-                <SignIn
+                <SignInLabel
                   onClick={() => {
                     navigate("/login");
                   }}
                 >
                   로그인
-                </SignIn>
-                <SignUp>회원가입</SignUp>
+                </SignInLabel>
+                <SignUpLabel>회원가입</SignUpLabel>
               </div>
               <LoginForm>
                 <Label marginTop="20px">아이디</Label>
@@ -192,7 +192,7 @@ const LoginBox = styled.div`
   }
 `;
 
-const SignIn = styled.button`
+const SignInLabel = styled.button`
   width: 100%;
   height: 40px;
   border: none;
@@ -202,7 +202,7 @@ const SignIn = styled.button`
   color: ${({ theme }) => theme.color.white};
 `;
 
-const SignUp = styled.button`
+const SignUpLabel = styled.button`
   width: 100%;
   height: 40px;
   border: none;
@@ -274,4 +274,4 @@ const PasswordAlert = styled.div`
   font-size: small;
   font-weight: 600;
 `;
-export default Login;
+export default SignUp;

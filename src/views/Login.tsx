@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useInput from "../utils/hooks/useInput";
@@ -6,6 +6,7 @@ import { sendUserInfo } from "../api/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../modules/isLoggedin";
 import { setUserProfile } from "../modules/userProfile";
+import { useMutation } from "@tanstack/react-query";
 import TblogIcon from "../assets/icons/main.png";
 
 function Login() {
@@ -19,28 +20,36 @@ function Login() {
   const apiEndpoint = "login";
   const dispatch = useDispatch();
 
-  async function submitLogin(e: FormEvent) {
-    e.preventDefault();
-    try {
-      const response = await sendUserInfo(id, pw, null, apiEndpoint);
-
-      if (response?.data.token == undefined) {
-        alert("잘못된 회원정보입니다.");
-      } else {
-        // 토큰 및 유저 프로필 저장
-        localStorage.setItem("jwt", response.data.token);
-        const userProfile = {
-          id: response.data.profile.id,
-          nickname: response.data.profile.nickname,
-        };
-        dispatch(login());
-        dispatch(setUserProfile(userProfile));
-        navigate("/");
-      }
-    } catch (err) {
+  const loginMutation = useMutation({
+    mutationFn: async () => {
+      return await sendUserInfo(id, pw, null, apiEndpoint);
+    },
+    onSuccess: () => {
+      console.log("로그인 성공");
+    },
+    onError: (err) => {
       console.error(err);
+    },
+  });
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    loginMutation.mutate();
+  };
+
+  useEffect(() => {
+    if (loginMutation.isSuccess) {
+      // 비동기 처리 이므로, useEffect 내에서 핸들링
+      localStorage.setItem("jwt", loginMutation.data.token);
+      const userProfile = {
+        id: loginMutation.data.profile.id,
+        nickname: loginMutation.data.profile.nickname,
+      };
+      dispatch(login());
+      dispatch(setUserProfile(userProfile));
+      navigate("/");
     }
-  }
+  }, [loginMutation.isSuccess]);
 
   return (
     <>
@@ -64,7 +73,7 @@ function Login() {
                   회원가입
                 </SignUp>
               </div>
-              <LoginForm id="loginForm" onSubmit={submitLogin}>
+              <LoginForm id="loginForm" onSubmit={handleSubmit}>
                 <Label>아이디</Label>
                 <InputBox
                   name="id"
