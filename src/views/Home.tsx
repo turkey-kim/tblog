@@ -14,7 +14,7 @@ interface Writing {
 
 function Home() {
   const { data } = useQuery<Writing[]>({
-    queryKey: ["getList"],
+    queryKey: ["getWriting"],
     queryFn: async () => {
       return await getWritings("api/get_writings");
     },

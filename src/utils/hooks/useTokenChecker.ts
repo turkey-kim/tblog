@@ -11,11 +11,11 @@ function useTokenChecker() {
     async function sendToken() {
       const response = await authWithToken(token, apiEndpoint);
       if (response.tokenValidity) {
-        console.log("갱신결과 : " + response.data.tokenValidity);
+        console.log("갱신결과 : " + response.tokenValidity);
         setIsLoading(false);
         setIsTokenValid(true);
       } else if (!response.tokenValidity) {
-        console.log("갱신결과 : " + response.data.tokenValidity);
+        console.log("갱신결과 : " + response.tokenValidity);
         setIsLoading(false);
         setIsTokenValid(false);
       }

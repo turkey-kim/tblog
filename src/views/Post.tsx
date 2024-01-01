@@ -9,6 +9,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../modules";
 import { FileDrop } from "react-file-drop";
 import { SERVER_API_ADDRESS } from "../constants/link";
+import {
+  useMutation,
+  QueryClient,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 const Post = () => {
   const [markdown, setMarkdown] = useState("");
@@ -19,6 +24,7 @@ const Post = () => {
 
   const targetRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const onChangeValue = (
     value?: string,
@@ -28,16 +34,31 @@ const Post = () => {
     setMarkdown(value ?? "");
   };
 
-  const post = () => {
-    const date = new Date();
-    postWriting(
-      title,
-      user?.nickname,
-      markdown,
-      date.toLocaleDateString(),
-      user?.id
-    );
-    navigate("/test");
+  const postMutation = useMutation({
+    mutationFn: async () => {
+      const date = new Date();
+      return await postWriting(
+        title,
+        user?.nickname,
+        markdown,
+        date.toLocaleDateString(),
+        user?.id
+      );
+    },
+    onSuccess: () => {
+      console.log("글 발행 성공");
+      queryClient.invalidateQueries({
+        queryKey: ["getWriting"],
+      });
+      navigate("/mypage");
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
+
+  const handlePost = () => {
+    postMutation.mutate();
   };
 
   async function upload(files: FileList, formData: FormData) {
@@ -79,7 +100,7 @@ const Post = () => {
         </FileDrop>
       </div>
       <ButtonContainer>
-        <Button text="발행" size="medium" onClick={post}></Button>
+        <Button text="발행" size="medium" onClick={handlePost}></Button>
       </ButtonContainer>
       {/* <MDEditor.Markdown source={markdown} style={{ whiteSpace: "pre-wrap" }} /> */}
     </Container>

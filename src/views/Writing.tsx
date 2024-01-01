@@ -2,56 +2,66 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { getOneWriting } from "../api/writing";
 import { deleteWriting } from "../api/writing";
-import { useEffect, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules";
 import { useNavigate } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import Button from "../components/Button";
-import { Blockquote, Code, P, H1, H2 } from "../assets/markdown/components";
 import CommentBox from "../components/CommentBox";
 import Comments from "../components/Comments";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import "../markdown.css";
 
 function Writing() {
   let { id } = useParams();
-
-  let [writing, setWriting] = useState<any>({});
-
   const navigate = useNavigate();
-
   const user = useSelector((state: RootState) => state.userProfile);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const apiEndPoint = "api/get_one_writing";
-    async function fetch() {
-      const result = await getOneWriting(id, apiEndPoint);
-      setWriting(result?.data);
-    }
+  const { data } = useQuery({
+    queryKey: [`getWriting`, { id: id }],
+    queryFn: async () => {
+      const apiEndPoint = "api/get_one_writing";
+      return await getOneWriting(id, apiEndPoint);
+    },
+    staleTime: Infinity,
+  });
 
-    fetch();
-  }, []);
+  const deleteMutation = useMutation({
+    mutationFn: async () => {
+      const apiEndPoint = "api/delete_writing";
+      return await deleteWriting(apiEndPoint, data.id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["getWriting"],
+      });
+      alert("삭제되었습니다!");
+      navigate(-1);
+    },
 
-  function editThis() {
-    navigate(`/edit/${writing.id}`);
-  }
+    onError: (err) => {
+      console.error(err);
+    },
+  });
 
-  function deleteThis() {
-    let apiEndPoint = "api/delete_writing";
-    deleteWriting(apiEndPoint, writing.id);
-    alert("삭제되었습니다!");
-    navigate(-1);
-  }
+  const editThis = () => {
+    navigate(`/edit/${id}`);
+  };
+
+  const handleDelete = () => {
+    deleteMutation.mutate();
+  };
 
   return (
     <Container>
       <WritingHeader>
-        <Title>{writing.title}</Title>
-        <Date>{writing.date}</Date>
-        <Author>by .{writing.author}</Author>
+        <Title>{data?.title}</Title>
+        <Date>{data?.date}</Date>
+        <Author>by .{data?.author}</Author>
       </WritingHeader>
-      {user?.id == writing.auth ? (
+      {user?.id == data?.auth ? (
         <AuthorMenu>
           <Button
             size="small"
@@ -65,7 +75,7 @@ function Writing() {
             color="light"
             text="삭제"
             margin="none"
-            onClick={deleteThis}
+            onClick={handleDelete}
           ></Button>
         </AuthorMenu>
       ) : null}
@@ -74,7 +84,7 @@ function Writing() {
           className="markdown-body"
           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
         >
-          {writing.content}
+          {data?.content}
         </ReactMarkdown>
       </Content>
       <CommentWrapper>

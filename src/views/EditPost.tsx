@@ -3,32 +3,56 @@ import styled from "styled-components";
 import MDEditor, { ContextStore } from "@uiw/react-md-editor";
 import Button from "../components/Button";
 import useMousedown from "../utils/hooks/useMousedown";
-import { editWriting } from "../api/writing";
+import { editWriting, getOneWriting } from "../api/writing";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules";
 import { useParams } from "react-router-dom";
-import { getOneWriting } from "../api/writing";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const EditPost = () => {
-  useEffect(() => {
-    const apiEndPoint = "api/get_one_writing";
-
-    async function fetch() {
-      const result = await getOneWriting(id, apiEndPoint);
-      setMarkdown(result?.data.content);
-      setTitle(result?.data.title);
-
-      if (user?.id != result?.data.auth) {
-        navigate("/");
-      }
-    }
-    fetch();
-  }, []);
-
-  let { id } = useParams();
+  const { id } = useParams();
   const [markdown, setMarkdown] = useState("");
-  let [title, setTitle] = useState("");
+  const [title, setTitle] = useState("");
+  const apiEndPoint = "api/get_one_writing";
+  const queryClient = useQueryClient();
+
+  const { data } = useQuery({
+    queryKey: [`getWriting`, { id: id }],
+    queryFn: async () => {
+      return await getOneWriting(id, apiEndPoint);
+    },
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (user?.id != data?.auth) navigate("/");
+    setMarkdown(data?.content);
+    setTitle(data?.title);
+  }, [data]);
+
+  const postMutation = useMutation({
+    mutationFn: async () => {
+      const date = new Date();
+      await editWriting(
+        id,
+        title,
+        user?.nickname,
+        markdown,
+        date.toLocaleDateString(),
+        user?.id
+      );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [`getWriting`],
+      });
+      navigate(`/writing/${id}`);
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
 
   const user = useSelector((state: RootState) => state.userProfile);
 
@@ -44,17 +68,8 @@ const EditPost = () => {
     setMarkdown(value ?? "");
   };
 
-  const editPost = () => {
-    const date = new Date();
-    editWriting(
-      id,
-      title,
-      user?.nickname,
-      markdown,
-      date.toLocaleDateString(),
-      user?.id
-    );
-    navigate("/test");
+  const handleEditPost = () => {
+    postMutation.mutate();
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +101,7 @@ const EditPost = () => {
         />
       )}
       <ButtonContainer>
-        <Button text="수정완료" size="medium" onClick={editPost}></Button>
+        <Button text="수정완료" size="medium" onClick={handleEditPost}></Button>
       </ButtonContainer>
       {/* <MDEditor.Markdown source={markdown} style={{ whiteSpace: "pre-wrap" }} /> */}
     </Container>

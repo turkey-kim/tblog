@@ -30,9 +30,11 @@ export const getMyWriting = async (
 // 특정 글 불러오기
 export const getOneWriting = async (id: any, apiEndPoint?: string | null) => {
   try {
-    return await axios.post(`${SERVER_API_ADDRESS}/${apiEndPoint}`, {
+    const res = await axios.post(`${SERVER_API_ADDRESS}/${apiEndPoint}`, {
       id: parseInt(id),
     });
+
+    return res.data;
   } catch (err) {
     console.error(err);
   }
@@ -69,7 +71,7 @@ export const editWriting = async (
   auth: string | undefined
 ) => {
   try {
-    return await axios.post(`${SERVER_API_ADDRESS}/api/edit_writing`, {
+    const res = await axios.post(`${SERVER_API_ADDRESS}/api/edit_writing`, {
       id: id,
       title: title,
       author: author,
@@ -77,6 +79,8 @@ export const editWriting = async (
       date: date,
       auth: auth,
     });
+
+    console.log(res.data.status);
   } catch (err) {
     console.error(err);
   }
